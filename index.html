@@ -1,16 +1,52 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>観光AI案内</title>
-</head>
-<body>
-  <h1>観光AIガイド</h1>
-  <button onclick="getLocation()">現在地取得</button>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>観光AIガイド</title>
 
-  <p id="status"></p>
-  <p id="result"></p>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    #status {
+      margin-top: 20px;
+      color: gray;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>観光AIガイド</h1>
+
+  <p>
+    現在地を監視しています...
+  </p>
+
+  <div id="status">
+    GPS取得待機中...
+  </div>
+
+  <div id="result">
+    近くのスポットを探しています...
+  </div>
 
   <script src="main.js"></script>
+
+  <button onclick="startWatch()">
+  監視開始
+  </button>
+
 </body>
 </html>

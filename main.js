@@ -15,34 +15,12 @@
           description: "太秦の公園。近くに住む子供たちが楽しく遊ぶ公園",
           vibe: "まったり・京都にとけ込みたい人向け" }
       ];
-// ===== GPS取得 =====
-function getLocation() {
-  navigator.geolocation.getCurrentPosition(success, error);
-}
-
-function success(position) {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
-
-  document.getElementById("status").innerText =
-    `現在地: ${lat}, ${lon}`;
-
-  const nearest = findNearestSpot(lat, lon);
-
-  document.getElementById("result").innerText =
-    `最寄りスポット: ${nearest.name}`;
-
-  // AIに説明を作らせる
-  generateGuide(nearest);
-}
-
-function error() {
-  alert("位置情報を取得できません");
-}
+// ===== 既に案内したスポット =====
+const visited = new Set();
 
 // ===== 距離計算 =====
 function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // 地球半径(km)
+  const R = 6371;
 
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
@@ -58,26 +36,63 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// ===== 最寄りスポット判定 =====
-function findNearestSpot(lat, lon) {
-  let minDist = Infinity;
-  let nearest = null;
+// ===== 案内生成 =====
+function generateGuide(spot) {
 
-  for (let spot of spots) {
-    const dist = getDistance(lat, lon, spot.lat, spot.lon);
+  const text =
+    `${spot.name}の近くです。${spot.description}`;
 
-    if (dist < minDist) {
-      minDist = dist;
-      nearest = spot;
-    }
-  }
+  document.getElementById("result").innerText =
+    text;
 
-  return nearest;
+  // 音声読み上げ
+  speechSynthesis.speak(
+    new SpeechSynthesisUtterance(text)
+  );
 }
 
-// ===== AI呼び出し =====
-function generateGuide(spot) {
-  const guide = `${spot.name}へようこそ！ここは${spot.description}です。ぜひ楽しんでください。`;
+// ===== 常時監視開始 =====
+function startWatch() {
 
-  document.getElementById("result").innerText += "\n\n" + guide;
+  navigator.geolocation.watchPosition(
+    (position) => {
+
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      document.getElementById("status").innerText =
+        `現在地: ${lat}, ${lon}`;
+
+      for (const spot of spots) {
+
+        const dist = getDistance(
+          lat,
+          lon,
+          spot.lat,
+          spot.lon
+        );
+
+        // 100m以内
+        if (dist < 0.1) {
+
+          // 未案内なら
+          if (!visited.has(spot.name)) {
+
+            visited.add(spot.name);
+
+            generateGuide(spot);
+          }
+        }
+      }
+
+    },
+    (err) => {
+      console.error(err);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 5000
+    }
+  );
 }

@@ -30,84 +30,121 @@
           description: "東角のおうち。サンサーラの東側のおうちです",
           vibe: "まったり・京都に溶け込みたい人向け" }
       ];
-// ===== 既に案内したスポット =====35.01799572460345, 135.69711429525734
-const visited = new Set();
+      
+// 一度案内したスポットを保存
+const guidedSpots = new Set();
 
-// ===== 距離計算 =====
-function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371;
 
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
+// 何m以内で案内するか
+const GUIDE_DISTANCE = 100;
 
-  const a =
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) *
-    Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
 
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-  return R * c;
-}
+// 常時監視開始
+navigator.geolocation.watchPosition(
 
-// ===== 案内生成 =====
-function generateGuide(spot) {
+  function(position) {
 
-  const text =
-    `${spot.name}の近くです。${spot.description}`;
+    const userLat = position.coords.latitude;
+    const userLng = position.coords.longitude;
 
-  document.getElementById("result").innerText =
-    text;
+    console.log("現在地:", userLat, userLng);
 
-  // 音声読み上げ
-  speechSynthesis.speak(
-    new SpeechSynthesisUtterance(text)
-  );
-}
 
-// ===== 常時監視開始 =====
-function startWatch() {
+    let nearestSpot = null;
+    let nearestDistance = Infinity;
 
-  navigator.geolocation.watchPosition(
-    (position) => {
 
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
+    // 全スポット確認
+    for (const spot of spots) {
 
-      document.getElementById("status").innerText =
-        `現在地: ${lat}, ${lon}`;
-
-      for (const spot of spots) {
-
-        const dist = getDistance(
-          lat,
-          lon,
-          spot.lat,
-          spot.lon
-        );
-
-        // 100m以内
-        if (dist < 0.05) {
-
-          // 未案内なら
-          if (!visited.has(spot.name)) {
-
-            visited.add(spot.name);
-
-            generateGuide(spot);
-          }
-        }
+      // すでに案内済みならスキップ
+      if (guidedSpots.has(spot.id)) {
+        continue;
       }
 
-    },
-    (err) => {
-      console.error(err);
-    },
-    {
-      enableHighAccuracy: true,
-      maximumAge: 0,
-      timeout: 5000
+
+      const distance = getDistance(
+        userLat,
+        userLng,
+        spot.lat,
+        spot.lng
+      );
+
+      console.log(spot.name, Math.round(distance) + "m");
+
+
+      // 最も近いスポット更新
+      if (distance < nearestDistance) {
+
+        nearestDistance = distance;
+        nearestSpot = spot;
+
+      }
+
     }
-  );
+
+
+
+    // 一番近いスポットが案内範囲内なら案内
+    if (
+      nearestSpot &&
+      nearestDistance <= GUIDE_DISTANCE
+    ) {
+
+      console.log("案内開始:", nearestSpot.name);
+
+      alert(
+        "近くに " +
+        nearestSpot.name +
+        " があります"
+      );
+
+
+      // 案内済みに追加
+      guidedSpots.add(nearestSpot.id);
+
+    }
+
+  },
+
+
+
+  function(error) {
+
+    console.error(error);
+
+  },
+
+
+
+  {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 10000
+  }
+
+);
+
+
+
+
+
+// 距離計算
+function getDistance(lat1, lng1, lat2, lng2) {
+
+  const R = 6371000;
+
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c;
 }

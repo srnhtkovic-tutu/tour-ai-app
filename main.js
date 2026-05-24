@@ -72,17 +72,11 @@ navigator.geolocation.watchPosition(
     let nearestSpot = null;
     let nearestDistance = Infinity;
 
-    // グローバルクールダウン状態の判定
-    if (now - lastGuideTime < GUIDE_COOLDOWN) {
-      return;
-    }
-
-    alert("リリース２です");
-
-    // 全スポット確認
+    
+       // 全スポット確認して範囲内リストを更新
     for (const spot of spots) {
 
-      // 案内済みは除外
+      // 案内済みスポットは更新対象から除外
       if (guidedSpots.has(spot.id)) {
         continue;
       }
@@ -102,10 +96,10 @@ navigator.geolocation.watchPosition(
 
 
 
-      // 範囲内に入った
+      // 範囲内に入ったら範囲内リストを更新する（滞在時間、最短スポットかどうか）
       if (distance <= GUIDE_DISTANCE) {
 
-        // 初めて近づいた
+        // 初めて入ったのなら時間を記録
         if (!stayStartTimes[spot.id]) {
 
           stayStartTimes[spot.id] = now;
@@ -150,6 +144,10 @@ navigator.geolocation.watchPosition(
 
     }
 
+    // グローバルクールダウン状態なら戻る
+    if (now - lastGuideTime < GUIDE_COOLDOWN) {
+      return;
+    }
 
 
     // 滞在条件クリアで案内
@@ -157,7 +155,6 @@ navigator.geolocation.watchPosition(
 
       const stayTime =
         now - stayStartTimes[nearestSpot.id];
-
 
 
       if (stayTime >= STAY_TIME) {
@@ -184,7 +181,7 @@ navigator.geolocation.watchPosition(
         // 滞在記録削除
         delete stayStartTimes[nearestSpot.id];
 
-        // グローバルクールダウン開始
+        // グローバルクールダウン状態にする
         lastGuideTime = now;
         
       }
@@ -202,7 +199,7 @@ navigator.geolocation.watchPosition(
   },
 
 
-
+  // WatchPositionのオプション
   {
     enableHighAccuracy: true,
     maximumAge: 0,

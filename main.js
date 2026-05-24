@@ -69,7 +69,6 @@ navigator.geolocation.watchPosition(
     const now = Date.now();
 
 
-
     let nearestSpot = null;
     let nearestDistance = Infinity;
 

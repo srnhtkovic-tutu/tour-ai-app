@@ -50,11 +50,11 @@ const GUIDE_DISTANCE = 100;
 
 
 // 何秒滞在したら案内するか
-const STAY_TIME = 30 * 1000;
+const STAY_TIME = 10 * 1000;
 
 // グローバルクールダウンを設定
 let lastGuideTime = 0;
-const GUIDE_COOLDOWN = 3 * 60 * 1000;
+const GUIDE_COOLDOWN = 1 * 60 * 1000;
 
 
 navigator.geolocation.watchPosition(
@@ -72,14 +72,12 @@ navigator.geolocation.watchPosition(
     let nearestSpot = null;
     let nearestDistance = Infinity;
 
-    // グローバルクールダウン解除判定
+    // グローバルクールダウン状態の判定
     if (now - lastGuideTime < GUIDE_COOLDOWN) {
       return;
     }
 
-    alert(
-          "リリース　１ です"
-        );
+    alert("リリース２です");
 
     // 全スポット確認
     for (const spot of spots) {

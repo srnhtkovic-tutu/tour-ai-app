@@ -74,7 +74,6 @@ navigator.geolocation.watchPosition(
     let nearestDistance = Infinity;
 
     // グローバルクールダウン解除判定
-    const now = Date.now();
     if (now - lastGuideTime < GUIDE_COOLDOWN) {
       return;
     }
@@ -83,6 +82,7 @@ navigator.geolocation.watchPosition(
           リリース　1 +
           " です"
         );
+
     // 全スポット確認
     for (const spot of spots) {
 

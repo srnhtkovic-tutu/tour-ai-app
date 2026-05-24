@@ -97,7 +97,7 @@ navigator.geolocation.watchPosition(
 
 
 
-      // 範囲内に入ったら範囲内リストを更新する（滞在時間、最短スポットかどうか）
+      // 範囲内に入ったら範囲内リスト（スポット名、滞在時間）、および最短スポットと最短距離）
       if (distance <= GUIDE_DISTANCE) {
 
         // 初めて入ったのなら時間を記録
@@ -145,13 +145,13 @@ navigator.geolocation.watchPosition(
 
     }
 
-    // グローバルクールダウン状態なら戻る
+    // グローバルクールダウン中なら何もしないで戻る
     if (now - lastGuideTime < GUIDE_COOLDOWN) {
       return;
     }
 
 
-    // 滞在条件クリアで案内
+    // 滞在条件をクリアしたら案内
     if (nearestSpot) {
 
       const stayTime =
@@ -182,7 +182,7 @@ navigator.geolocation.watchPosition(
         // 滞在記録削除
         delete stayStartTimes[nearestSpot.id];
 
-        // グローバルクールダウン状態にする
+        // グローバルクールダウン中にする
         lastGuideTime = now;
         
       }

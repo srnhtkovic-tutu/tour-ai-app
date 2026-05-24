@@ -37,16 +37,23 @@
           vibe: "まったり・京都に溶け込みたい人向け" }
       ];
 
-// 一度案内したスポットを保存
+// 一度案内した場所
 const guidedSpots = new Set();
 
 
-// 何m以内で案内するか
+// 近づいた時刻を保存
+const stayStartTimes = {};
+
+
+// 何m以内を「近い」とするか
 const GUIDE_DISTANCE = 100;
 
 
+// 何秒滞在したら案内するか
+const STAY_TIME = 30 * 1000;
 
-// 常時監視開始
+
+
 navigator.geolocation.watchPosition(
 
   function(position) {
@@ -56,15 +63,19 @@ navigator.geolocation.watchPosition(
 
     console.log("現在地:", userLat, userLng);
 
+    const now = Date.now();
+
+
 
     let nearestSpot = null;
     let nearestDistance = Infinity;
 
 
+
     // 全スポット確認
     for (const spot of spots) {
 
-      // すでに案内済みならスキップ
+      // 案内済みは除外
       if (guidedSpots.has(spot.id)) {
         continue;
       }
@@ -77,14 +88,56 @@ navigator.geolocation.watchPosition(
         spot.lng
       );
 
-      console.log(spot.name, Math.round(distance) + "m");
+      console.log(
+        spot.name,
+        Math.round(distance) + "m"
+      );
 
 
-      // 最も近いスポット更新
-      if (distance < nearestDistance) {
 
-        nearestDistance = distance;
-        nearestSpot = spot;
+      // 範囲内に入った
+      if (distance <= GUIDE_DISTANCE) {
+
+        // 初めて近づいた
+        if (!stayStartTimes[spot.id]) {
+
+          stayStartTimes[spot.id] = now;
+
+          console.log(
+            spot.name + " に近づきました"
+          );
+        }
+
+
+        // 滞在時間
+        const stayTime =
+          now - stayStartTimes[spot.id];
+
+
+
+        console.log(
+          "滞在時間:",
+          Math.round(stayTime / 1000),
+          "秒"
+        );
+
+
+
+        // 一番近いスポット更新
+        if (distance < nearestDistance) {
+
+          nearestDistance = distance;
+          nearestSpot = spot;
+
+        }
+
+      }
+
+
+      // 範囲外へ出た
+      else {
+
+        delete stayStartTimes[spot.id];
 
       }
 
@@ -92,23 +145,39 @@ navigator.geolocation.watchPosition(
 
 
 
-    // 一番近いスポットが案内範囲内なら案内
-    if (
-      nearestSpot &&
-      nearestDistance <= GUIDE_DISTANCE
-    ) {
+    // 滞在条件クリアで案内
+    if (nearestSpot) {
 
-      console.log("案内開始:", nearestSpot.name);
-
-      alert(
-        "近くに " +
-        nearestSpot.name +
-        " があります"
-      );
+      const stayTime =
+        now - stayStartTimes[nearestSpot.id];
 
 
-      // 案内済みに追加
-      guidedSpots.add(nearestSpot.id);
+
+      if (stayTime >= STAY_TIME) {
+
+        alert(
+          nearestSpot.name +
+          " の近くにいます"
+        );
+
+
+
+        console.log(
+          "案内:",
+          nearestSpot.name
+        );
+
+
+
+        // 案内済み
+        guidedSpots.add(nearestSpot.id);
+
+
+
+        // 滞在記録削除
+        delete stayStartTimes[nearestSpot.id];
+
+      }
 
     }
 
@@ -136,21 +205,31 @@ navigator.geolocation.watchPosition(
 
 
 
-// 距離計算
 function getDistance(lat1, lng1, lat2, lng2) {
 
   const R = 6371000;
 
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const dLat =
+    (lat2 - lat1) * Math.PI / 180;
+
+  const dLng =
+    (lng2 - lng1) * Math.PI / 180;
 
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLat / 2) *
+    Math.sin(dLat / 2) +
+
     Math.cos(lat1 * Math.PI / 180) *
     Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLng / 2) * Math.sin(dLng / 2);
 
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    Math.sin(dLng / 2) *
+    Math.sin(dLng / 2);
+
+  const c =
+    2 * Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
 
   return R * c;
 }

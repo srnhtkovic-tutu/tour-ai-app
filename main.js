@@ -78,8 +78,7 @@ navigator.geolocation.watchPosition(
     }
 
     alert(
-          リリース　1 +
-          " です"
+          "リリース　１ です"
         );
 
     // 全スポット確認

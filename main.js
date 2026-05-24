@@ -79,6 +79,10 @@ navigator.geolocation.watchPosition(
       return;
     }
 
+    alert(
+          リリース　1 +
+          " です"
+        );
     // 全スポット確認
     for (const spot of spots) {
 

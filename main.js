@@ -46,17 +46,17 @@ const stayStartTimes = {};
 
 
 // 何m以内を「近い」とするか
-const GUIDE_DISTANCE = 100;
+const GUIDE_DISTANCE = 20;
 
 
-// 何秒滞在したら案内するか
-const STAY_TIME = 10 * 1000;
+// 何秒滞在したら案内するか　単位はms
+const STAY_TIME = 0 * 1000;
 
 // グローバルクールダウンを設定
 let lastGuideTime = 0;
-const GUIDE_COOLDOWN = 1 * 60 * 1000;
+const GUIDE_COOLDOWN = 0 * 60 * 1000　//単位はms
 
-alert("リリース４です");
+alert("リリース５です");
 
 navigator.geolocation.watchPosition(
 

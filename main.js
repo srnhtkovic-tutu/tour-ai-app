@@ -56,7 +56,7 @@ const STAY_TIME = 0 * 1000;
 let lastGuideTime = 0;
 const GUIDE_COOLDOWN = 0 * 60 * 1000　//単位はms
 
-alert("リリース５です");
+alert("リリース６です");
 
 navigator.geolocation.watchPosition(
 

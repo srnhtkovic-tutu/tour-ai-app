@@ -38,49 +38,79 @@
       ];
 
 // =========================
-// グローバル変数
+// 設定値
 // =========================
 
-let watchId = null;
-
-// 現在の案内距離
+// 案内開始距離
 let triggerDistance = 100;
 
-// 案内済み管理
-const guidedSpots = new Set();
+// 離脱判定距離
+const LEAVE_DISTANCE = 120;
+
+// 滞在必要時間
+const STAY_TIME = 10 * 1000;
+
+// 案内クールタイム
+const GUIDE_COOLDOWN =
+  5 * 60 * 1000;
 
 
 // =========================
-// スライダー初期化
+// 状態管理
 // =========================
 
-const slider = document.getElementById("distanceSlider");
-const distanceValue = document.getElementById("distanceValue");
+// 現在対象スポット
+let currentSpot = null;
 
-slider.addEventListener("input", function () {
+// 接近開始時間
+let enterTime = null;
 
-  triggerDistance = Number(slider.value);
-
-  distanceValue.textContent = triggerDistance;
-
-  console.log("案内距離変更:", triggerDistance);
-
-});
+// 最後に案内した時刻
+const lastGuideTime = {};
 
 
 // =========================
-// 位置監視開始
+// スライダー
+// =========================
+
+const slider =
+  document.getElementById(
+    "distanceSlider"
+  );
+
+const distanceValue =
+  document.getElementById(
+    "distanceValue"
+  );
+
+slider.addEventListener(
+  "input",
+  function () {
+
+    triggerDistance =
+      Number(slider.value);
+
+    distanceValue.textContent =
+      triggerDistance;
+
+  }
+);
+
+
+// =========================
+// GPS監視開始
 // =========================
 
 function startWatch() {
 
   if (!navigator.geolocation) {
 
-    alert("GPSが利用できません");
+    alert("GPS非対応");
     return;
+
   }
 
-  watchId = navigator.geolocation.watchPosition(
+  navigator.geolocation.watchPosition(
 
     success,
 
@@ -94,36 +124,45 @@ function startWatch() {
 
   );
 
-  document.getElementById("status").textContent =
-    "位置監視中...";
+  setStatus("GPS監視開始");
+
 }
 
 
 // =========================
-// GPS取得成功
+// GPS成功
 // =========================
 
 function success(position) {
 
-  const lat = position.coords.latitude;
-  const lng = position.coords.longitude;
+  const lat =
+    position.coords.latitude;
 
-  console.log("現在地:", lat, lng);
+  const lng =
+    position.coords.longitude;
 
-  document.getElementById("status").textContent =
-    `現在地: ${lat}, ${lng}`;
+  setStatus(
+    `現在地: ${lat.toFixed(5)}, ${lng.toFixed(5)}`
+  );
 
-  checkNearbySpots(lat, lng);
+  processNearestSpot(lat, lng);
 
 }
 
 
 // =========================
-// 近距離スポット判定
+// 最寄りスポット処理
 // =========================
 
-function checkNearbySpots(currentLat, currentLng) {
+function processNearestSpot(
+  currentLat,
+  currentLng
+) {
 
+  let nearest = null;
+  let minDistance = Infinity;
+
+  // 最短距離スポット探索
   for (const spot of spots) {
 
     const distance = getDistance(
@@ -133,22 +172,116 @@ function checkNearbySpots(currentLat, currentLng) {
       spot.lng
     );
 
-    console.log(
-      spot.name,
-      distance.toFixed(1) + "m"
-    );
+    if (distance < minDistance) {
 
-    // 近づいたか判定
-    if (distance <= triggerDistance) {
+      minDistance = distance;
+      nearest = spot;
 
-      // 未案内なら案内
-      if (!guidedSpots.has(spot.id)) {
+    }
 
-        guidedSpots.add(spot.id);
+  }
 
-        startGuide(spot);
+  if (!nearest) return;
+
+  // UI表示
+  document.getElementById(
+    "nearestSpot"
+  ).textContent =
+
+    `最寄りスポット:
+     ${nearest.name}
+     (${minDistance.toFixed(1)}m)`;
+
+
+  // =====================
+  // 接近判定
+  // =====================
+
+  if (minDistance <= triggerDistance) {
+
+    // 新スポット接近
+    if (
+      !currentSpot ||
+      currentSpot.id !== nearest.id
+    ) {
+
+      currentSpot = nearest;
+
+      enterTime = Date.now();
+
+      console.log(
+        "接近開始:",
+        nearest.name
+      );
+
+    }
+
+    const stayMs =
+      Date.now() - enterTime;
+
+    document.getElementById(
+      "stayTime"
+    ).textContent =
+
+      `滞在時間:
+       ${(stayMs / 1000).toFixed(1)}秒`;
+
+
+
+    // =====================
+    // 滞在成立
+    // =====================
+
+    if (stayMs >= STAY_TIME) {
+
+      const last =
+        lastGuideTime[nearest.id] || 0;
+
+      const now = Date.now();
+
+      // クールタイム確認
+      if (
+        now - last >
+        GUIDE_COOLDOWN
+      ) {
+
+        startGuide(nearest);
+
+        lastGuideTime[
+          nearest.id
+        ] = now;
 
       }
+
+    }
+
+  }
+
+  // =====================
+  // 離脱判定
+  // =====================
+
+  else {
+
+    if (
+      currentSpot &&
+      minDistance >
+      LEAVE_DISTANCE
+    ) {
+
+      console.log(
+        "離脱:",
+        currentSpot.name
+      );
+
+      currentSpot = null;
+
+      enterTime = null;
+
+      document.getElementById(
+        "stayTime"
+      ).textContent =
+        "滞在時間: 0秒";
 
     }
 
@@ -158,16 +291,23 @@ function checkNearbySpots(currentLat, currentLng) {
 
 
 // =========================
-// 案内開始
+// 案内処理
 // =========================
 
 function startGuide(spot) {
 
   alert(
-    `【${spot.name}】\n\n${spot.description}`
+
+`【${spot.name}】
+
+${spot.description}`
+
   );
 
-  console.log("案内開始:", spot.name);
+  console.log(
+    "案内開始:",
+    spot.name
+  );
 
 }
 
@@ -176,29 +316,45 @@ function startGuide(spot) {
 // 距離計算
 // =========================
 
-function getDistance(lat1, lng1, lat2, lng2) {
+function getDistance(
+  lat1,
+  lng1,
+  lat2,
+  lng2
+) {
 
   const R = 6371000;
 
-  const dLat = toRad(lat2 - lat1);
-  const dLng = toRad(lng2 - lng1);
+  const dLat =
+    toRad(lat2 - lat1);
+
+  const dLng =
+    toRad(lng2 - lng1);
 
   const a =
+
     Math.sin(dLat / 2) *
-    Math.sin(dLat / 2) +
+    Math.sin(dLat / 2)
+
+    +
 
     Math.cos(toRad(lat1)) *
-    Math.cos(toRad(lat2)) *
+    Math.cos(toRad(lat2))
+
+    *
 
     Math.sin(dLng / 2) *
     Math.sin(dLng / 2);
 
-  const c = 2 * Math.atan2(
-    Math.sqrt(a),
-    Math.sqrt(1 - a)
-  );
+  const c =
+
+    2 * Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
 
   return R * c;
+
 }
 
 
@@ -208,7 +364,21 @@ function getDistance(lat1, lng1, lat2, lng2) {
 
 function toRad(value) {
 
-  return value * Math.PI / 180;
+  return value *
+    Math.PI / 180;
+
+}
+
+
+// =========================
+// ステータス表示
+// =========================
+
+function setStatus(text) {
+
+  document.getElementById(
+    "status"
+  ).textContent = text;
 
 }
 

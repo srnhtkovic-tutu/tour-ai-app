@@ -2,9 +2,10 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>GPS観光案内</title>
+  <title>観光AIガイド</title>
 
   <style>
+
     body {
       font-family: sans-serif;
       padding: 20px;
@@ -17,46 +18,64 @@
       margin-top: 20px;
     }
 
-    .setting {
-      margin-top: 20px;
-      padding: 10px;
+    .panel {
       background: #f0f0f0;
-      border-radius: 8px;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
     }
 
     #distanceValue {
-      font-weight: bold;
       color: blue;
+      font-weight: bold;
       font-size: 20px;
     }
+
   </style>
 </head>
 
 <body>
 
-  <h1>GPS観光案内</h1>
+  <h1>観光AIガイド10</h1>
 
-  <button onclick="startWatch()">位置監視開始</button>
+  <button onclick="startWatch()">
+    位置監視開始
+  </button>
 
-  <div class="setting">
-    <h3>案内開始距離設定</h3>
+  <div class="panel">
+
+    <h3>案内開始距離</h3>
 
     <input
       type="range"
       id="distanceSlider"
       min="10"
-      max="100"
-      value="30"
+      max="500"
       step="10"
+      value="100"
     >
 
     <p>
-      現在の案内距離:
-      <span id="distanceValue">100</span> m
+      現在:
+      <span id="distanceValue">100</span>
+      m
     </p>
+
   </div>
 
-  <p id="status">待機中</p>
+  <div class="panel">
+
+    <p id="status">待機中</p>
+
+    <p id="nearestSpot">
+      最寄りスポット: なし
+    </p>
+
+    <p id="stayTime">
+      滞在時間: 0秒
+    </p>
+
+  </div>
 
   <div id="map"></div>
 

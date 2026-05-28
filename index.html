@@ -1,46 +1,64 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>観光AIガイド</title>
+  <title>GPS観光案内</title>
 
   <style>
     body {
       font-family: sans-serif;
       padding: 20px;
-      line-height: 1.6;
     }
 
-    #status {
+    #map {
+      width: 100%;
+      height: 400px;
+      background: #ddd;
       margin-top: 20px;
-      color: gray;
     }
 
-    #result {
-      margin-top: 30px;
-      font-size: 1.2em;
+    .setting {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+
+    #distanceValue {
       font-weight: bold;
+      color: blue;
+      font-size: 20px;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>観光AIガイド</h1>
+  <h1>GPS観光案内</h1>
 
-  <p>
-    現在地を監視しています...
-  </p>
+  <button onclick="startWatch()">位置監視開始</button>
 
-  <div id="status">
-    GPS取得待機中...
+  <div class="setting">
+    <h3>案内開始距離設定</h3>
+
+    <input
+      type="range"
+      id="distanceSlider"
+      min="10"
+      max="500"
+      value="100"
+      step="10"
+    >
+
+    <p>
+      現在の案内距離:
+      <span id="distanceValue">100</span> m
+    </p>
   </div>
 
-  <div id="result">
-    近くのスポットを探しています...
-  </div>
+  <p id="status">待機中</p>
+
+  <div id="map"></div>
 
   <script src="main.js"></script>
 

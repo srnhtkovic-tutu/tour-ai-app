@@ -75,7 +75,7 @@
 let triggerDistance = 30;
 
 // 離脱判定距離
-const LEAVE_DISTANCE = 120;
+const LEAVE_DISTANCE = 40;
 
 // 滞在必要時間
 const STAY_TIME = 10 * 1000;
@@ -154,7 +154,7 @@ function startWatch() {
 
   );
 
-  setStatus("GPS監視開始1");
+  setStatus("GPS監視開始2");
 
 }
 

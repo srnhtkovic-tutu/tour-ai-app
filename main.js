@@ -64,6 +64,12 @@
           lat: 34.932943316902346,
           lng: 135.76185559070285,
           description: "配達先のケイタイショップです",
+          vibe: "まったり・京都に溶け込みたい人向け" },
+        { id: 12,
+          name: "フィリップス",
+          lat: 34.94760543405506,
+          lng: 135.75320509884278,
+          description: "配達先のフィリップスです",
           vibe: "まったり・京都に溶け込みたい人向け" }
       ];
 
@@ -72,10 +78,10 @@
 // =========================
 
 // 案内開始距離
-let triggerDistance = 30;
+let triggerDistance = 5000;
 
 // 離脱判定距離
-const LEAVE_DISTANCE = 40;
+const LEAVE_DISTANCE = 5500;
 
 // 滞在必要時間
 const STAY_TIME = 10 * 1000;

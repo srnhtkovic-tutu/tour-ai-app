@@ -104,6 +104,14 @@ let enterTime = null;
 // 最後に案内した時刻
 const lastGuideTime = {};
 
+// 興味なしスポット
+const ignoredSpots = new Set();
+
+// 訪問済みスポット
+const visitedSpots = new Set();
+
+// 案内中フラグ
+let guideActive = false;
 
 // =========================
 // スライダー
@@ -194,12 +202,22 @@ function processNearestSpot(
   currentLat,
   currentLng
 ) {
-
+  if (guideActive) {
+     return;
+  }
   let nearest = null;
   let minDistance = Infinity;
 
   // 最短距離スポット探索
   for (const spot of spots) {
+
+    if (
+      ignoredSpots.has(spot.id)
+      ||
+      visitedSpots.has(spot.id)
+    ) {
+      continue;
+    }
 
     const distance = getDistance(
       currentLat,
@@ -332,17 +350,23 @@ function processNearestSpot(
 
 function startGuide(spot) {
 
-  alert(
+  guideActive = true;
 
-`【${spot.name}】
+  currentSpot = spot;
 
-${spot.description}`
+  const guideText =
 
+`近くに ${spot.name} があります。
+
+${spot.description}`;
+
+  showGuidePanel(
+    guideText,
+    spot
   );
 
-  console.log(
-    "案内開始:",
-    spot.name
+  speakGuide(
+    guideText
   );
 
 }
@@ -430,3 +454,128 @@ function error(err) {
   alert("GPS取得失敗");
 
 }
+
+function speakGuide(text){
+
+  const speech =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+  speech.lang = "ja-JP";
+
+  speechSynthesis.speak(
+    speech
+  );
+
+}
+
+function showGuidePanel(
+  text,
+  spot
+){
+
+  document.getElementById(
+    "guidePanel"
+  ).style.display = "block";
+
+  document.getElementById(
+    "guideTitle"
+  ).textContent =
+    spot.name;
+
+  document.getElementById(
+    "guideMessage"
+  ).textContent =
+    text;
+
+}
+
+document
+.getElementById("detailBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    openChatGPT(currentSpot);
+
+  }
+);
+
+function openChatGPT(spot){
+
+  const prompt = encodeURIComponent(
+
+`私は今 ${spot.name}
+の近くにいます。
+
+詳しく教えてください。`
+
+  );
+
+  window.open(
+
+`https://chat.openai.com/?q=${prompt}`,
+
+"_blank"
+
+  );
+
+}
+
+document
+.getElementById("goBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    visitedSpots.add(
+      currentSpot.id
+    );
+
+    const url =
+
+`https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
+
+    window.open(
+      url,
+      "_blank"
+    );
+
+    closeGuide();
+
+  }
+);
+
+document
+.getElementById("ignoreBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    ignoredSpots.add(
+      currentSpot.id
+    );
+
+    closeGuide();
+
+  }
+);
+
+
+function closeGuide(){
+
+  document.getElementById(
+    "guidePanel"
+  ).style.display =
+    "none";
+
+  guideActive = false;
+
+  currentSpot = null;
+
+  enterTime = null;
+
+}
+
+

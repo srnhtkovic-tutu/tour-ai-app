@@ -2,7 +2,7 @@ let spots = [];
 const SUPABASE_URL = "https://fugibstqzkmzplqrpovn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CM7-Kj4GEFY0oG2EI3t-XQ_MijxwUcZ";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -12,7 +12,7 @@ const supabase = window.supabase.createClient(
 // =========================
 async function loadSpots() {
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from("spots")
     .select("*");
 

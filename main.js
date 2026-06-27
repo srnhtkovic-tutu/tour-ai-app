@@ -554,4 +554,5 @@ async function initialize() {
 
 }
 
+initialize();
 

@@ -1,90 +1,36 @@
-      const spots = [
-        { id: 1,
-          name: "嵐山の渡月橋",
-          lat: 35.01267,
-          lng: 135.677746,
-          description: "京都の嵐山。四季折々の山並みの景色が美しい。食べ歩きも人気",
-          vibe: "にぎやか・観光向け" },
-        { id: 2,
-          name: "東映太秦映画村",
-          lat: 35.016189,
-          lng: 135.708637,
-          description: "太秦駅から３分。江戸時代の生活文化を体験できる",
-          vibe: "にぎやか・観光向け" },
-        { id: 3,
-          name: "太秦乾公園",
-          lat: 35.01826871,
-          lng: 135.69797022,
-          description: "太秦の公園。近くに住む子供たちが楽しく遊ぶ公園",
-          vibe: "まったり・京都にとけ込みたい人向け" },
-        { id: 4,
-          name: "自宅正面のおうち",
-          lat: 35.01799572460345,
-          lng: 135.69711429525734,
-          description: "正面のおうち。子供たちの声が聞こえてきます",
-          vibe: "まったり・京都にとけ込みたい人向け" },
-        { id: 5,
-          name: "ご近所さん西角のおうち",
-          lat: 35.01800066707424, 
-          lng: 135.69676158477435,
-          description: "西の角のおうち。サンサーラの入り口のまんまえです",
-          vibe: "まったり・京都にとけ込みたい人向け" },
-        { id: 6,
-          name: "ご近所さん東角のおうち",
-          lat: 35.01800066707424,
-          lng: 135.69728394496906,
-          description: "東角のおうち。サンサーラの東側のおうちです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 7,
-          name: "まとば歯科",
-          lat: 34.93307855135378,
-          lng: 135.76081355250946,
-          description: "古くからの歯医者さんです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 8,
-          name: "エディオンタニヤマ",
-          lat: 34.93308184975226, 
-          lng: 135.7606553021809,
-          description: "古くからの電気屋さんです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 9,
-          name: "茶寮油長",
-          lat: 34.9329334216898,
-          lng: 135.7614130262247,
-          description: "古くからのお茶屋さんです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 10,
-          name: "タカノ",
-          lat: 34.93294771477424,
-          lng: 135.76163699067274,
-          description: "古くからの時計屋さんです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 11,
-          name: "ドコモショップ伏見",
-          lat: 34.932943316902346,
-          lng: 135.76185559070285,
-          description: "配達先のケイタイショップです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 12,
-          name: "フィリップス",
-          lat: 34.94760543405506,
-          lng: 135.75320509884278,
-          description: "配達先のフィリップスです",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 13,
-          name: "桂離宮前公園",
-          lat: 34.98616314599169, 
-          lng: 135.7105543898991,
-          description: "ふわりクンお気に入りの公園です。空いているときは走り回ることができます。今日は空いているといいね",
-          vibe: "まったり・京都に溶け込みたい人向け" },
-        { id: 14,
-          name: "日通事務所",
-          lat: 34.92551584146217,
-          lng: 135.746949284043,
-          description: "みや商の皆さんが働いている日通の事務所です。今日も一日頑張りましょう",
-          vibe: "まったり・京都に溶け込みたい人向け" }
+let spots = [];
+const SUPABASE_URL = "https://fugibstqzkmzplqrpovn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_CM7-Kj4GEFY0oG2EI3t-XQ_MijxwUcZ";
 
-      ];
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+// =========================
+// spots読み込み処理
+// =========================
+async function loadSpots() {
+
+  const { data, error } = await supabase
+    .from("spots")
+    .select("*");
+
+  if (error) {
+    console.error(error);
+    return [];
+  }
+
+  return data.map(spot => ({
+    id: spot.id,
+    name: spot.name,
+    lat: Number(spot.lat),
+    lng: Number(spot.lng),
+    description: spot.description,
+    vibe: spot.vibe
+  }));
+
+}
 
 // =========================
 // 設定値
@@ -588,6 +534,23 @@ function closeGuide(){
   currentSpot = null;
 
   enterTime = null;
+
+}
+
+async function initialize() {
+
+  setStatus("スポット読込中...");
+
+  spots = await loadSpots();
+
+  if (spots.length === 0) {
+    setStatus("スポットがありません");
+    return;
+  }
+
+  setStatus(`${spots.length}件読み込み完了`);
+
+  startWatch();
 
 }
 

@@ -21,6 +21,8 @@ async function loadSpots() {
     return [];
   }
 
+  console.log(data);
+
   return data.map(spot => ({
     id: spot.id,
     name: spot.name,
@@ -127,7 +129,7 @@ function startWatch() {
 
   );
 
-  setStatus("GPS監視開始2");
+  setStatus("GPS監視開始 version3");
 
 }
 

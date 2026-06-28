@@ -23,14 +23,19 @@ async function loadSpots() {
 
   console.log(data);
 
-  return data.map(spot => ({
-    id: spot.id,
-    name: spot.name,
-    lat: Number(spot.lat),
-    lng: Number(spot.lng),
-    description: spot.description,
-    vibe: spot.vibe
-  }));
+return data.map(spot => ({
+
+  id: spot.id,
+  name: spot.name,
+  lat: Number(spot.lat),
+  lng: Number(spot.lng),
+
+  catchCopy: spot.guide_data.catchCopy,
+  topReason: spot.guide_data.topReason,
+  ownerExperience: spot.guide_data.ownerExperience,
+  highlightPoints: spot.guide_data.highlightPoints
+
+}));
 
 }
 
@@ -315,11 +320,11 @@ function startGuide(spot) {
 
   currentSpot = spot;
 
-  const guideText =
+ const guideText =
 
 `近くに ${spot.name} があります。
 
-${spot.description}`;
+${spot.guideData.catchCopy}`;
 
   showGuidePanel(
     guideText,

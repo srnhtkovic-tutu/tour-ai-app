@@ -545,6 +545,8 @@ async function initialize() {
 
   spots = await loadSpots();
 
+  console.log("spots=", spots);
+
   if (spots.length === 0) {
     setStatus("スポットがありません");
     return;

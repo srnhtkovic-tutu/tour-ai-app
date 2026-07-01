@@ -23,12 +23,18 @@ async function loadSpots() {
 
   console.log(data);
 
+  console.log(
+    JSON.stringify(data, null, 2)
+  );
+
 return data.map(spot => ({
 
   id: spot.id,
   name: spot.name,
   lat: Number(spot.lat),
   lng: Number(spot.lng),
+
+  guideData: spot.guide_data,
 
   catchCopy: spot.guide_data.catchCopy,
   topReason: spot.guide_data.topReason,
@@ -324,7 +330,7 @@ function startGuide(spot) {
 
 `近くに ${spot.name} があります。
 
-${spot.guideData.catchCopy}`;
+${spot.catchCopy}`;
 
   showGuidePanel(
     guideText,
@@ -564,4 +570,5 @@ async function initialize() {
 }
 
 initialize();
+
 

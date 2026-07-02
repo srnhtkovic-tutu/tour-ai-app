@@ -140,7 +140,7 @@ function startWatch() {
 
   );
 
-  setStatus("GPS監視開始 version3");
+  setStatus("GPS監視開始 version4");
 
 }
 
@@ -321,6 +321,8 @@ function processNearestSpot(
 // =========================
 
 function startGuide(spot) {
+
+  console.log(spot);
 
   guideActive = true;
 
@@ -557,6 +559,8 @@ async function initialize() {
   spots = await loadSpots();
 
   console.log("spots=", spots);
+
+  console.log(spots[0]);
 
   if (spots.length === 0) {
     setStatus("スポットがありません");

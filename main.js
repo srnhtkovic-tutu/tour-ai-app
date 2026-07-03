@@ -316,11 +316,12 @@ function processNearestSpot(
 }
 
 
+
 // =========================
 // 案内処理
 // =========================
 
-function startGuide(spot) {
+async function startGuide(spot) {
 
   console.log(spot);
 
@@ -328,11 +329,7 @@ function startGuide(spot) {
 
   currentSpot = spot;
 
- const guideText =
-
-`近くに ${spot.name} があります。
-
-${spot.catchCopy}`;
+  const guideText = await createGuide(spot);
 
   showGuidePanel(
     guideText,
@@ -466,38 +463,6 @@ function showGuidePanel(
 }
 
 document
-.getElementById("detailBtn")
-.addEventListener(
-  "click",
-  function(){
-
-    openChatGPT(currentSpot);
-
-  }
-);
-
-function openChatGPT(spot){
-
-  const prompt = encodeURIComponent(
-
-`私は今 ${spot.name}
-の近くにいます。
-
-詳しく教えてください。`
-
-  );
-
-  window.open(
-
-`https://chat.openai.com/?q=${prompt}`,
-
-"_blank"
-
-  );
-
-}
-
-document
 .getElementById("goBtn")
 .addEventListener(
   "click",
@@ -552,6 +517,53 @@ function closeGuide(){
 
 }
 
+// =========================
+// AI案内生成
+// =========================
+
+async function generateGuide(spot){
+
+    const response = await fetch(
+
+        "https://ここにCloudflare WorkerのURL",
+
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+
+                spot:{
+
+                    name:spot.name,
+
+                    catchCopy:spot.catchCopy,
+
+                    topReason:spot.topReason,
+
+                    ownerExperience:spot.ownerExperience,
+
+                    highlightPoints:
+                        spot.highlightPoints
+
+                }
+
+            })
+
+        }
+
+    );
+
+    const data = await response.json();
+
+    return data.guide;
+
+}
+
 async function initialize() {
 
   setStatus("スポット読込中...");
@@ -571,6 +583,30 @@ async function initialize() {
 
   startWatch();
 
+}
+
+async function createGuide(spot) {
+
+  const response = await fetch(
+    "https://fugibstqzkmzplqrpovn.supabase.co/functions/v1/guide-ai",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        spot: spot
+      })
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("AI呼び出し失敗");
+  }
+
+  const data = await response.json();
+
+  return data.guide;
 }
 
 initialize();

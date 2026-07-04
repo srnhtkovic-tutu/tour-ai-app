@@ -1,0 +1,154 @@
+
+*{
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    margin:0;
+
+    padding:20px;
+
+    background:#f3f2ed;
+
+    font-family:sans-serif;
+
+    color:#333;
+
+}
+
+#app{
+
+    max-width:700px;
+
+    margin:auto;
+
+}
+
+#status{
+
+    font-size:20px;
+
+    color:#666;
+
+    margin-bottom:10px;
+
+}
+
+#nearestSpot{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+#guidePanel{
+
+    display:none;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+#guideTitle{
+
+    font-size:42px;
+
+    margin-top:0;
+
+    margin-bottom:20px;
+
+    color:#2b5d34;
+
+}
+
+#guideMessage{
+
+    font-size:30px;
+
+    line-height:1.9;
+
+    white-space:pre-wrap;
+
+}
+
+button{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:22px;
+
+    font-size:28px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+}
+
+#repeatBtn{
+
+    background:#4caf50;
+
+    color:white;
+
+}
+
+#goBtn{
+
+    background:#2196f3;
+
+    color:white;
+
+}
+
+#ignoreBtn{
+
+    background:#e0e0e0;
+
+}
+
+@media (max-width:600px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+    #guideTitle{
+
+        font-size:36px;
+
+    }
+
+    #guideMessage{
+
+        font-size:26px;
+
+    }
+
+    button{
+
+        font-size:24px;
+
+        padding:18px;
+
+    }
+
+}

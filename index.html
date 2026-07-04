@@ -58,42 +58,67 @@
 
   </div>
 
-  <div class="panel">
+  <!DOCTYPE html>
+<html lang="ja">
 
-    <p id="status">待機中</p>
+<head>
 
-    <p id="nearestSpot">
-      最寄りスポット: なし
-    </p>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <p id="stayTime">
-      滞在時間: 0秒
-    </p>
+<title>まちあるきAIガイド</title>
 
-  </div>
+<link rel="stylesheet" href="style.css">
 
-  <div id="map"></div>
+</head>
 
-  <div id="guidePanel"
-     style="display:none">
+<body>
 
-  <h3 id="guideTitle"></h3>
+<div id="app">
 
-  <p id="guideMessage"></p>
+    <div id="status">
+        GPS取得中...
+    </div>
 
-  <button id="detailBtn">
-    詳しく聞く
-  </button>
+    <div id="nearestSpot">
+        最寄りスポット
+    </div>
 
-  <button id="goBtn">
-    そこに行く
-  </button>
+    <div id="guidePanel">
 
-  <button id="ignoreBtn">
-    興味がない
-  </button>
+        <h1 id="guideTitle">
+            スポット名
+        </h1>
+
+        <div id="guideMessage">
+            案内文がここに表示されます。
+        </div>
+
+        <button id="repeatBtn">
+            🔊 もう一度聞く
+        </button>
+
+        <button id="goBtn">
+            📍 行ってみる
+        </button>
+
+        <button id="ignoreBtn">
+            ✖ 今回は案内しない
+        </button>
+
+    </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="main.js"></script>
 

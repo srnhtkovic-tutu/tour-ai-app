@@ -428,19 +428,41 @@ function error(err) {
 
 function speakGuide(text){
 
+  // 前回の読み上げを停止
   speechSynthesis.cancel();
 
-  const speech =
-    new SpeechSynthesisUtterance(
-      text
-    );
+  // 音声一覧を取得
+  const voices = speechSynthesis.getVoices();
+
+  console.log(voices);
+
+  const speech = new SpeechSynthesisUtterance(text);
 
   speech.lang = "ja-JP";
+  speech.rate = 1.0;
+  speech.pitch = 1.0;
+  speech.volume = 1.0;
 
-  speechSynthesis.speak(
-    speech
-  );
+  // 日本語音声があれば設定
+  const jaVoice = voices.find(v => v.lang.startsWith("ja"));
 
+  if (jaVoice) {
+    speech.voice = jaVoice;
+  }
+
+  speech.onerror = (e) => {
+    console.log("Speech Error", e);
+  };
+
+  speech.onstart = () => {
+    console.log("Speech Start");
+  };
+
+  speech.onend = () => {
+    console.log("Speech End");
+  };
+
+  speechSynthesis.speak(speech);
 }
 
 function showGuidePanel(

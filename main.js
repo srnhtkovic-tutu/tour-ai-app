@@ -428,6 +428,8 @@ function error(err) {
 
 function speakGuide(text){
 
+  speechSynthesis.cancel();
+
   const speech =
     new SpeechSynthesisUtterance(
       text

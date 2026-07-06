@@ -320,28 +320,23 @@ function processNearestSpot(
 // =========================
 // 案内処理
 // =========================
+let currentGuideText = "";
 
-async function startGuide(spot) {
+async function startGuide(spot){
 
-  console.log(spot);
+    guideActive = true;
 
-  guideActive = true;
+    currentSpot = spot;
 
-  currentSpot = spot;
+    const guideText = await createGuide(spot);
 
-  const guideText = await createGuide(spot);
+    currentGuideText = guideText;
 
-  showGuidePanel(
-    guideText,
-    spot
-  );
+    showGuidePanel(guideText, spot);
 
-  speakGuide(
-    guideText
-  );
+    speakGuide(guideText);
 
 }
-
 
 // =========================
 // 距離計算
@@ -485,6 +480,14 @@ function showGuidePanel(
     text;
 
 }
+
+document
+.getElementById("repeatBtn")
+.addEventListener("click",function(){
+
+    speakGuide(currentGuideText);
+
+});
 
 document
 .getElementById("goBtn")

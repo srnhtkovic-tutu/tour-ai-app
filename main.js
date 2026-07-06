@@ -33,7 +33,7 @@ return data.map(spot => ({
   name: spot.name,
   lat: Number(spot.lat),
   lng: Number(spot.lng),
-
+  imageUrl: spot.image_url,
   guideData: spot.guide_data,
 
   catchCopy: spot.guide_data.catchCopy,
@@ -468,6 +468,11 @@ function showGuidePanel(
   document.getElementById(
     "guidePanel"
   ).style.display = "block";
+
+  document.getElementById(
+    "spotImage"
+  ).src =
+    spot.imageUrl;
 
   document.getElementById(
     "guideTitle"

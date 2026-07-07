@@ -334,7 +334,8 @@ async function startGuide(spot){
 
     showGuidePanel(guideText, spot);
 
-    speakGuide(guideText);
+//    speakGuide(guideText);
+    playNotification();
 
 }
 
@@ -641,6 +642,98 @@ async function createGuide(spot) {
   return data.guide;
 }
 
+function playNotification(){
+
+    const audio =
+        new Audio("notification.mp3");
+
+    audio.play();
+
+}
+
+async function sendQuestion(question){
+
+  const response = await fetch(
+
+    "https://fugibstqzkmzplqrpovn.supabase.co/functions/v1/chat-ai",
+
+    {
+
+      method:"POST",
+
+      headers:{
+
+        "Content-Type":"application/json",
+
+        "Authorization":"Bearer " + SUPABASE_KEY
+
+      },
+
+      body:JSON.stringify({
+
+        spot:currentSpot,
+
+        question:question
+
+      })
+
+    }
+
+  );
+
+  if(!response.ok){
+
+      throw new Error("チャット失敗");
+
+  }
+
+  const data = await response.json();
+
+  return data.answer;
+
+}
+
 initialize();
 
+document
+.getElementById("sendBtn")
+.addEventListener(
 
+"click",
+
+async function(){
+
+    const question =
+
+        document
+        .getElementById("question")
+        .value;
+
+    if(question===""){
+
+        return;
+
+    }
+
+    const answer =
+        await sendQuestion(question);
+
+    document
+    .getElementById("chatHistory")
+    .innerHTML +=
+
+    "<p><b>あなた</b><br>"
+    + question
+    + "</p>"
+
+    +
+
+    "<p><b>AI</b><br>"
+    + answer
+    + "</p>";
+
+    document
+    .getElementById("question")
+    .value="";
+
+});

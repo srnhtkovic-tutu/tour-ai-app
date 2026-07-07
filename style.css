@@ -165,3 +165,33 @@ button{
     display:block;
 
 }
+
+#chatArea{
+
+    margin-top:30px;
+
+}
+
+#question{
+
+    width:100%;
+
+    font-size:22px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+}
+
+#chatHistory{
+
+    margin-top:20px;
+
+    white-space:pre-wrap;
+
+    font-size:22px;
+
+    line-height:1.8;
+
+}

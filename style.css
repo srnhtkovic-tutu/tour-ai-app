@@ -195,3 +195,23 @@ button{
     line-height:1.8;
 
 }
+
+#chatArea h3{
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
+    color:#2b5d34;
+
+}
+
+.chatDescription{
+
+    font-size:22px;
+
+    color:#666;
+
+    margin-bottom:20px;
+
+}

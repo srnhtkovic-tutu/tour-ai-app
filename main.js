@@ -333,7 +333,32 @@ async function startGuide(spot){
 
     currentSpot = spot;
 
-    const guideText = await createGuide(spot);
+    //　const guideText = await createGuide(spot);
+    try{
+
+        const guideText =
+            await createGuide(spot);
+
+        showGuidePanel(
+            guideText,
+            spot
+        );
+
+    }
+    catch(e){
+
+        console.error(e);
+
+        showGuidePanel(
+
+            "通信状態が不安定です。もう一度お試しください。",
+
+            spot
+
+        );
+
+    }
+
 
     currentGuideText = guideText;
 

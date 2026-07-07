@@ -86,6 +86,11 @@ const visitedSpots = new Set();
 let guideActive = false;
 
 // =========================
+// AIチャット履歴
+// =========================
+let chatHistory = [];
+
+// =========================
 // スライダー
 // =========================
 
@@ -671,9 +676,9 @@ async function sendQuestion(question){
 
       body:JSON.stringify({
 
-        spot:currentSpot,
+      spot:currentSpot,
 
-        question:question
+      history:chatHistory
 
       })
 
@@ -715,8 +720,32 @@ async function(){
 
     }
 
+    chatHistory.push({
+
+        role:"user",
+
+        text:question
+
+    });
+
     const answer =
         await sendQuestion(question);
+
+    chatHistory.push({
+
+        role:"assistant",
+
+        text:answer
+
+    });
+
+    // 履歴は最大20件（user + assistantで1往復2件）
+    while(chatHistory.length > 20){
+
+        chatHistory.shift();
+
+    }
+    
 
   document
     .getElementById("chatHistory")

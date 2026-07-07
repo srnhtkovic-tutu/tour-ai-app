@@ -718,19 +718,25 @@ async function(){
     const answer =
         await sendQuestion(question);
 
-    document
+  document
     .getElementById("chatHistory")
     .innerHTML +=
 
-    "<p><b>あなた</b><br>"
-    + question
-    + "</p>"
+`
 
-    +
+  <div class="userMessage">
 
-    "<p><b>AI</b><br>"
-    + answer
-    + "</p>";
+  👤 ${question}
+
+  </div>
+
+  <div class="aiMessage">
+
+  🤖 ${answer}
+
+  </div>
+
+`;
 
     document
     .getElementById("question")

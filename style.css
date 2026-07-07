@@ -176,11 +176,15 @@ button{
 
     width:100%;
 
-    font-size:22px;
+    min-height:90px;
 
-    padding:12px;
+    font-size:24px;
 
-    border-radius:10px;
+    border-radius:16px;
+
+    padding:18px;
+
+    border:2px solid #ddd;
 
 }
 
@@ -213,5 +217,47 @@ button{
     color:#666;
 
     margin-bottom:20px;
+
+}
+
+#chatHistory{
+
+    margin-top:25px;
+
+}
+
+.userMessage{
+
+    background:#d8ecff;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    margin-top:20px;
+
+    margin-left:20%;
+
+    font-size:24px;
+
+}
+
+.aiMessage{
+
+    background:#ffffff;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    margin-top:10px;
+
+    margin-right:20%;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+    font-size:24px;
+
+    line-height:1.8;
 
 }

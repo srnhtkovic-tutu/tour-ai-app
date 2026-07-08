@@ -330,45 +330,30 @@ let currentGuideText = "";
 async function startGuide(spot){
 
     guideActive = true;
-
     currentSpot = spot;
 
-    //　const guideText = await createGuide(spot);
+    let guideText = "";
+
     try{
 
-        const guideText =
-            await createGuide(spot);
+        guideText = await createGuide(spot);
 
-        showGuidePanel(
-            guideText,
-            spot
-        );
-
-    }
-    catch(e){
+    }catch(e){
 
         console.error(e);
 
-        showGuidePanel(
-
-            "通信状態が不安定です。もう一度お試しください。",
-
-            spot
-
-        );
+        guideText =
+            "通信状態が不安定です。もう一度お試しください。";
 
     }
-
 
     currentGuideText = guideText;
 
     showGuidePanel(guideText, spot);
 
-//    speakGuide(guideText);
     playNotification();
 
 }
-
 // =========================
 // 距離計算
 // =========================
@@ -681,7 +666,7 @@ function playNotification(){
 
 }
 
-async function sendQuestion(question){
+async function sendQuestion(){
 
   const response = await fetch(
 
@@ -791,6 +776,13 @@ async function(){
   </div>
 
 `;
+
+  document.getElementById("chatHistory")
+  .scrollTop =
+  document.getElementById("chatHistory")
+  .scrollHeight;
+
+
 
     document
     .getElementById("question")

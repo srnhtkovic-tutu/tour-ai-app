@@ -95,28 +95,29 @@
   <h3>💬 AIコンシェルジュ</h3>
 
   <p class="chatDescription">
-
-  観光地について気になることを自由に質問してください。
-
+    観光地について気になることを自由に質問してください。
   </p>
 
-  <textarea
+  <!-- 会話履歴を先に置く -->
+  <div id="chatHistory"></div>
+
+  <!-- 入力エリアは一番下 -->
+  <div id="chatInput">
+
+    <textarea
       id="question"
       placeholder="例：このお寺はいつ建立されましたか？"
-      rows="3">
-  </textarea>
+      rows="2">
+    </textarea>
 
-  <button id="sendBtn">
-
-  💬 質問する
-
-  </button>
-
-  <div id="chatHistory">
+    <button id="sendBtn">
+      💬 質問する
+    </button>
 
   </div>
 
-</div>
+  </div>
+
 
 </div>
 

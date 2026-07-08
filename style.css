@@ -170,6 +170,12 @@ button{
 
     margin-top:30px;
 
+    display:flex;
+
+    flex-direction:column;
+
+    height:100%;
+
 }
 
 #question{
@@ -198,6 +204,12 @@ button{
 
     line-height:1.8;
 
+    max-height:300px;
+
+    overflow-y:auto;
+
+    flex:1;
+
 }
 
 #chatArea h3{
@@ -223,6 +235,18 @@ button{
 #chatHistory{
 
     margin-top:25px;
+
+}
+
+#chatInput{
+
+    position:sticky;
+
+    bottom:0;
+
+    background:white;
+
+    padding:10px;
 
 }
 

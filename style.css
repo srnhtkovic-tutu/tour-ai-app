@@ -100,14 +100,6 @@ button{
 
 }
 
-#repeatBtn{
-
-    background:#4caf50;
-
-    color:white;
-
-}
-
 #goBtn{
 
     background:#2196f3;
@@ -118,7 +110,9 @@ button{
 
 #ignoreBtn{
 
-    background:#e0e0e0;
+    background:#4caf50;
+
+    color:white;
 
 }
 

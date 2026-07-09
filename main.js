@@ -85,6 +85,9 @@ const visitedSpots = new Set();
 // 案内中フラグ
 let guideActive = false;
 
+// 案内文折りたたみ処理
+let guideCollapsed = false;
+
 // =========================
 // AIチャット履歴
 // =========================
@@ -738,6 +741,18 @@ async function(){
 
     });
 
+    //案内文折りたたみ処理
+    const content =
+        document.getElementById("guideContent");
+
+    content.style.display="none";
+
+    document
+    .getElementById("toggleGuideBtn")
+    .textContent="▼ 案内文を表示";
+
+    guideCollapsed=true;
+
     const answer =
         await sendQuestion(question);
 
@@ -787,5 +802,37 @@ async function(){
     document
     .getElementById("question")
     .value="";
+
+});
+
+document
+.getElementById("toggleGuideBtn")
+.addEventListener("click",function(){
+
+    const content =
+        document.getElementById("guideContent");
+
+    const btn =
+        document.getElementById("toggleGuideBtn");
+
+    if(guideCollapsed){
+
+        content.style.display="block";
+
+        btn.textContent=
+            "▲ 案内文を閉じる";
+
+        guideCollapsed=false;
+
+    }else{
+
+        content.style.display="none";
+
+        btn.textContent=
+            "▼ 案内文を表示";
+
+        guideCollapsed=true;
+
+    }
 
 });

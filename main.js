@@ -505,6 +505,7 @@ function showGuidePanel(
 
 }
 
+
 document
 .getElementById("goBtn")
 .addEventListener(

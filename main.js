@@ -506,14 +506,6 @@ function showGuidePanel(
 }
 
 document
-.getElementById("repeatBtn")
-.addEventListener("click",function(){
-
-    speakGuide(currentGuideText);
-
-});
-
-document
 .getElementById("goBtn")
 .addEventListener(
   "click",

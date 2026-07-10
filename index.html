@@ -68,7 +68,7 @@
 
   </div>
 
-  <div id="guidePanel">
+  <div id="spotInfo">
 
     <img id="spotImage">
 
@@ -79,11 +79,6 @@
         <p id="guideMessage"></p>
 
     </div>
-    <button id="toggleGuideBtn">
-
-        ▲ 案内文を閉じる
-
-    </button>
 
     <button id="goBtn">
         🧭 行ってみる
@@ -95,16 +90,25 @@
 
     <hr>
 
+  </div>
+  <button id="toggleSpotInfo">
+
+        ▲ スポット情報を閉じる
+
+  </button>
+
   <div id="chatArea">
 
   <h3>💬 AIコンシェルジュ</h3>
 
   <p class="chatDescription">
-    自由に質問してください。
+    お気軽に質問してください。
   </p>
 
   <!-- 会話履歴を先に置く -->
   <div id="chatHistory"></div>
+
+  </div>
 
   <!-- 入力エリアは一番下 -->
   <div id="chatInput">
@@ -121,10 +125,6 @@
 
   </div>
 
-  </div>
-
-
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="main.js"></script>

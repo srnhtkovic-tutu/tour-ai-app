@@ -765,36 +765,38 @@ async function(){
     }
     
 
-  document
-    .getElementById("chatHistory")
-    .innerHTML +=
+const historyDiv =
+    document.getElementById("chatHistory");
 
-`
+historyDiv.innerHTML += `
 
-  <div class="userMessage">
+<div class="userMessage">
 
-  👤 ${question}
+👤 ${question}
 
-  </div>
+</div>
 
-  <div class="aiMessage">
+<div class="aiMessage">
 
-  🤖 ${answer}
+🤖 ${answer}
 
-  </div>
+</div>
 
 `;
 
-  document.getElementById("chatHistory")
-  .scrollTop =
-  document.getElementById("chatHistory")
-  .scrollHeight;
+document
+.getElementById("question")
+.value = "";
 
+// 一番下までスクロール
+window.scrollTo({
 
+    top: document.body.scrollHeight,
 
-    document
-    .getElementById("question")
-    .value="";
+    behavior: "smooth"
+
+});
+
 
 });
 

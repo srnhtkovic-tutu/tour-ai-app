@@ -50,13 +50,13 @@ return data.map(spot => ({
 // =========================
 
 // 案内開始距離
-let triggerDistance = 5000;
+let triggerDistance = 30;
 
 // 離脱判定距離
-const LEAVE_DISTANCE = 5500;
+const LEAVE_DISTANCE = 100;
 
 // 滞在必要時間
-const STAY_TIME = 10 * 1000;
+const STAY_TIME = 1 * 1000;
 
 // 案内クールタイム
 const GUIDE_COOLDOWN =

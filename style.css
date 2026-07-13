@@ -52,6 +52,28 @@ body{
 
 }
 
+#startGuideBtn{
+
+    margin-top:20px;
+
+    background:#4caf50;
+
+    color:white;
+
+    font-size:28px;
+
+    padding:20px;
+
+    border:none;
+
+    border-radius:14px;
+
+    width:100%;
+
+    cursor:pointer;
+
+}
+
 #distanceSlider{
 
     width:95%;

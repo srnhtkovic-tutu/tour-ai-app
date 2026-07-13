@@ -625,8 +625,6 @@ async function initialize() {
 
   setStatus(`${spots.length}件読み込み完了`);
 
-  startWatch();
-
 }
 
 async function createGuide(spot) {
@@ -653,12 +651,19 @@ async function createGuide(spot) {
   return data.guide;
 }
 
+const notificationAudio =
+    new Audio("notification.mp3");
+
 function playNotification(){
 
-    const audio =
-        new Audio("notification.mp3");
+    notificationAudio.currentTime = 0;
 
-    audio.play();
+    notificationAudio.play()
+    .catch(err=>{
+
+        console.log(err);
+
+    });
 
 }
 
@@ -705,6 +710,44 @@ async function sendQuestion(){
 }
 
 initialize();
+
+document
+.getElementById("startGuideBtn")
+.addEventListener(
+
+    "click",
+
+    async function(){
+
+        // ボタンを押した瞬間に通知音を一度再生
+        const audio =
+            new Audio("notification.mp3");
+
+        try{
+
+            await audio.play();
+
+            audio.pause();
+
+            audio.currentTime = 0;
+
+        }catch(e){
+
+            console.log("音声初期化失敗",e);
+
+        }
+
+        // スタート画面を閉じる
+        document
+        .getElementById("startPanel")
+        .style.display="none";
+
+        // GPS開始
+        startWatch();
+
+    }
+
+);
 
 document
 .getElementById("sendBtn")

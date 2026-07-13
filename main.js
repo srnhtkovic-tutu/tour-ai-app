@@ -656,6 +656,8 @@ const notificationAudio =
 
 function playNotification(){
 
+    console.log("通知音を再生");
+
     notificationAudio.currentTime = 0;
 
     notificationAudio.play()
@@ -730,9 +732,13 @@ document
 
             console.log("通知音の再生成功");
 
-            audio.pause();
+            setTimeout(() => {
 
-            audio.currentTime = 0;
+              audio.pause();
+
+              audio.currentTime = 0;
+
+            },2000);
 
         }catch(e){
 

@@ -36,6 +36,13 @@ body{
 
 }
 
+#distanceSlider{
+
+    width:95%;
+    height:12px;
+
+}
+
 #nearestSpot{
 
     font-size:28px;

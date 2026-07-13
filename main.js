@@ -719,7 +719,8 @@ document
 
     async function(){
 
-        // ボタンを押した瞬間に通知音を一度再生
+        console.log("開始ボタンが押されました");
+
         const audio =
             new Audio("notification.mp3");
 
@@ -727,22 +728,22 @@ document
 
             await audio.play();
 
+            console.log("通知音の再生成功");
+
             audio.pause();
 
             audio.currentTime = 0;
 
         }catch(e){
 
-            console.log("音声初期化失敗",e);
+            console.error("通知音エラー", e);
 
         }
 
-        // スタート画面を閉じる
         document
         .getElementById("startPanel")
-        .style.display="none";
+        .style.display = "none";
 
-        // GPS開始
         startWatch();
 
     }

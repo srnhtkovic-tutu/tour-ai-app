@@ -85,9 +85,6 @@ const visitedSpots = new Set();
 // 案内中フラグ
 let guideActive = false;
 
-// 案内文折りたたみ処理
-let guideCollapsed = false;
-
 // スポット情報表示状態
 let spotInfoOpen = true;
 
@@ -838,7 +835,7 @@ async function(){
 
     //案内文折りたたみ処理
     const content =
-        document.getElementById("guideContent");
+        document.getElementById("spotInfo");
 
     content.style.display="none";
 
@@ -846,7 +843,7 @@ async function(){
     .getElementById("toggleGuideBtn")
     .textContent="▼ 案内文を表示";
 
-    guideCollapsed=true;
+    spotInfoOpen=false;
 
     const answer =
         await sendQuestion(question);
@@ -907,19 +904,19 @@ document
 .addEventListener("click",function(){
 
     const content =
-        document.getElementById("guideContent");
+        document.getElementById("spotInfo");
 
     const btn =
         document.getElementById("toggleGuideBtn");
 
-    if(guideCollapsed){
+    if(!spotInfoOpen){
 
         content.style.display="block";
 
         btn.textContent=
             "▲ 案内文を閉じる";
 
-        guideCollapsed=false;
+        spotInfoOpen=True;
 
     }else{
 
@@ -928,7 +925,7 @@ document
         btn.textContent=
             "▼ 案内文を表示";
 
-        guideCollapsed=true;
+        spotInfoOpen=false;
 
     }
 

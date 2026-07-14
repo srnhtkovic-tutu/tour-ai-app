@@ -88,6 +88,9 @@ let guideActive = false;
 // 案内文折りたたみ処理
 let guideCollapsed = false;
 
+// スポット情報表示状態
+let spotInfoOpen = true;
+
 // =========================
 // AIチャット履歴
 // =========================
@@ -503,6 +506,17 @@ function showGuidePanel(
   ).textContent =
     text;
 
+    spotInfoOpen = true;
+
+document
+.getElementById("spotInfo")
+.style.display = "block";
+
+document
+.getElementById("toggleSpotBtn")
+.textContent =
+    `📍 ${spot.name} ▲`;
+
 }
 
 
@@ -558,6 +572,8 @@ function closeGuide(){
   currentSpot = null;
 
   enterTime = null;
+
+  spotInfoOpen = true;
 
 }
 
@@ -712,6 +728,42 @@ async function sendQuestion(){
 }
 
 initialize();
+
+document
+.getElementById("toggleSpotBtn")
+.addEventListener(
+
+    "click",
+
+    function(){
+
+        const spotInfo =
+            document.getElementById("spotInfo");
+
+        const btn =
+            document.getElementById("toggleSpotBtn");
+
+        if(spotInfoOpen){
+
+            spotInfo.style.display = "none";
+
+            btn.textContent =
+                `📍 ${currentSpot.name} ▼`;
+
+        }else{
+
+            spotInfo.style.display = "block";
+
+            btn.textContent =
+                `📍 ${currentSpot.name} ▲`;
+
+        }
+
+        spotInfoOpen = !spotInfoOpen;
+
+    }
+
+);
 
 document
 .getElementById("startGuideBtn")

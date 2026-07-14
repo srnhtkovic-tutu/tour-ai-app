@@ -237,17 +237,7 @@ button{
 
     margin-top:20px;
 
-    white-space:pre-wrap;
-
-    font-size:22px;
-
-    line-height:1.8;
-
-    max-height:300px;
-
-    overflow-y:auto;
-
-    flex:1;
+    padding-bottom:180px;
 
 }
 
@@ -279,19 +269,19 @@ button{
 
 #chatInput{
 
-    position:sticky;
+    position:fixed;
 
     bottom:0;
 
+    left:0;
+
+    right:0;
+
     background:white;
 
-    padding:10px;
+    padding:15px;
 
-        display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
+    box-shadow:0 -3px 10px rgba(0,0,0,0.15);
 
 }
 
@@ -346,5 +336,45 @@ button{
     color:#333;
 
     font-size:20px;
+
+}
+
+#spotInfo{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+}
+
+#toggleSpotBtn{
+
+    width:100%;
+
+    background:#ececec;
+
+    color:#444;
+
+    font-size:20px;
+
+    padding:16px;
+
+    margin-top:10px;
+
+}
+
+#question{
+
+    width:100%;
+
+    font-size:22px;
+
+    border-radius:12px;
+
+    padding:12px;
 
 }

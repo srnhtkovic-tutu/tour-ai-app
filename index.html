@@ -88,61 +88,78 @@
 
   <div id="guidePanel">
 
-    <img id="spotImage">
+    <!-- スポット情報 -->
 
-    <h2 id="guideTitle"></h2>
+    <div id="spotInfo">
 
-    <div id="guideContent">
+        <img id="spotImage">
+
+        <h2 id="guideTitle"></h2>
 
         <p id="guideMessage"></p>
 
+        <button id="goBtn">
+            🧭 行ってみる
+        </button>
+
+        <button id="ignoreBtn">
+            ❌ ほかをみる
+        </button>
+
     </div>
-    <button id="toggleGuideBtn">
 
-        ▲ 案内文を閉じる
+    <!-- 開閉ボタン -->
 
-    </button>
+    <button id="toggleSpotBtn">
 
-    <button id="goBtn">
-        🧭 行ってみる
-    </button>
+        ▲ スポット情報を閉じる
 
-    <button id="ignoreBtn">
-        ➡ ほかをみる
     </button>
 
     <hr>
 
-  <div id="chatArea">
+    <!-- チャット履歴 -->
 
-  <h3>💬 AIコンシェルジュ</h3>
+    <div id="chatHistory">
 
-  <p class="chatDescription">
-    お気軽に質問してください。
-  </p>
+    </div>
 
-  <!-- 会話履歴を先に置く -->
-  <div id="chatHistory"></div>
+    <!-- 入力エリア -->
 
-  <!-- 入力エリアは一番下 -->
-  <div id="chatInput">
+    <div id="chatInput">
 
-    <textarea
-      id="question"
-      placeholder="例：このお寺はいつ建立されましたか？"
-      rows="2">
-    </textarea>
+        <h3>
 
-    <button id="sendBtn">
-      💬 質問する
-    </button>
+            💬 AIコンシェルジュ
 
-  </div>
+        </h3>
 
-  </div>
+        <p class="chatDescription">
 
+            気になることを自由に質問してください。
+
+        </p>
+
+        <textarea
+
+            id="question"
+
+            rows="3"
+
+            placeholder="例：御朱印はありますか？"
+
+        ></textarea>
+
+        <button id="sendBtn">
+
+            💬 質問する
+
+        </button>
+
+    </div>
 
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="main.js"></script>

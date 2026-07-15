@@ -544,6 +544,8 @@ document
 
   document.getElementById("guidePanel").style.display = "none";
 
+  document.getElementById("resumeBtn").style.display = "block";
+
   }
 );
 
@@ -935,7 +937,7 @@ document
         btn.textContent=
             "▲ 案内文を閉じる";
 
-        spotInfoOpen=True;
+        spotInfoOpen=true;
 
     }else{
 
@@ -951,20 +953,17 @@ document
 });
 
 document
-.getElementById("startBtn")
-.addEventListener(
-    "click",
-    function(){
+.getElementById("resumeBtn")
+.addEventListener("click", function(){
 
-        guidePaused = false;
+    guidePaused = false;
+    guideActive = false;
 
-        guideActive = false;
+    currentSpot = null;
+    enterTime = null;
 
-        currentSpot = null;
+    document.getElementById("resumeBtn").style.display = "none";
 
-        enterTime = null;
+    console.log("探索を再開しました");
 
-        console.log("ガイド再開");
-
-    }
-);
+});

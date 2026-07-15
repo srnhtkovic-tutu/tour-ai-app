@@ -840,8 +840,9 @@ async function(){
     content.style.display="none";
 
     document
-    .getElementById("toggleGuideBtn")
-    .textContent="▼ 案内文を表示";
+    .getElementById("toggleSpotBtn")
+    .textContent =
+    `📍 ${currentSpot.name} ▼`;
 
     spotInfoOpen=false;
 

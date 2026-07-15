@@ -10,6 +10,8 @@ body{
 
     padding:20px;
 
+    padding-bottom:220px;
+
     background:#f3f2ed;
 
     font-family:sans-serif;
@@ -237,7 +239,7 @@ button{
 
     margin-top:20px;
 
-    padding-bottom:180px;
+    padding-bottom:20px;
 
 }
 

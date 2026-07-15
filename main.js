@@ -884,6 +884,18 @@ historyDiv.innerHTML += `
 
 `;
 
+const history =
+    document.getElementById("chatHistory");
+
+history.lastElementChild?.scrollIntoView({
+
+    behavior:"smooth",
+
+    block:"end"
+
+});
+
+
 document
 .getElementById("question")
 .value = "";

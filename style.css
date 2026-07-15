@@ -241,6 +241,10 @@ button{
 
     padding-bottom:20px;
 
+    height: 45vh;
+
+    overflow-y: auto;
+    
 }
 
 #chatArea h3{

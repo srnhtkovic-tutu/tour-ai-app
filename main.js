@@ -85,6 +85,9 @@ const visitedSpots = new Set();
 // 案内中フラグ
 let guideActive = false;
 
+// GoogleMap案内中
+let guidePaused = false;
+
 // スポット情報表示状態
 let spotInfoOpen = true;
 
@@ -182,9 +185,10 @@ function processNearestSpot(
   currentLat,
   currentLng
 ) {
-  if (guideActive) {
-     return;
+  if (guideActive || guidePaused) {
+      return;
   }
+
   let nearest = null;
   let minDistance = Infinity;
 
@@ -531,12 +535,14 @@ document
 
 `https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
 
-    window.open(
+  guidePaused = true;
+
+  window.open(
       url,
       "_blank"
-    );
+  );
 
-    closeGuide();
+  document.getElementById("guidePanel").style.display = "none";
 
   }
 );
@@ -943,3 +949,22 @@ document
     }
 
 });
+
+document
+.getElementById("startBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        guidePaused = false;
+
+        guideActive = false;
+
+        currentSpot = null;
+
+        enterTime = null;
+
+        console.log("ガイド再開");
+
+    }
+);

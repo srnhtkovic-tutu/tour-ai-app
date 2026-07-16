@@ -531,20 +531,22 @@ document
       currentSpot.id
     );
 
+  guidePaused = true;
+
+    
+  document.getElementById("guidePanel").style.display = "none";
+
+  document.getElementById("resumeBtn").style.display = "block";
+
+
     const url =
 
 `https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
-
-  guidePaused = true;
 
   window.open(
       url,
       "_blank"
   );
-
-  document.getElementById("guidePanel").style.display = "none";
-
-  document.getElementById("resumeBtn").style.display = "block";
 
   }
 );

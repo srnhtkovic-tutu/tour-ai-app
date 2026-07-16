@@ -393,3 +393,19 @@ button{
     border:none;
     border-radius:14px;
 }
+
+#resumeBtn{
+    position: fixed;
+    bottom: 140px;   /* チャット入力欄より上に表示 */
+    left: 20px;
+    right: 20px;
+
+    background: #ff9800;
+    color: white;
+
+    z-index: 9999;
+
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}

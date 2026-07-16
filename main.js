@@ -958,6 +958,8 @@ document
 .getElementById("resumeBtn")
 .addEventListener("click", function(){
 
+    alert("ボタンが押されました");
+
     guidePaused = false;
     guideActive = false;
 
@@ -965,7 +967,5 @@ document
     enterTime = null;
 
     document.getElementById("resumeBtn").style.display = "none";
-
-    console.log("探索を再開しました");
 
 });

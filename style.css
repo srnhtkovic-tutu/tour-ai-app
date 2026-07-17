@@ -289,8 +289,6 @@ button{
 
     box-shadow:0 -3px 10px rgba(0,0,0,0.15);
 
-    display:none;
-
 }
 
 .userMessage{
@@ -388,26 +386,9 @@ button{
 }
 
 #resumeBtn{
+
     background:#ff9800;
+
     color:white;
-    font-size:28px;
-    font-weight:bold;
-    border:none;
-    border-radius:14px;
-}
 
-#resumeBtn{
-    position: fixed;
-    bottom: 140px;   /* チャット入力欄より上に表示 */
-    left: 20px;
-    right: 20px;
-
-    background: #ff9800;
-    color: white;
-
-    z-index: 9999;
-
-    padding: 20px;
-    font-size: 28px;
-    font-weight: bold;
 }

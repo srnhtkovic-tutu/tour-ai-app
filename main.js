@@ -533,13 +533,23 @@ document
 
   guidePaused = true;
 
-    
-  document.getElementById("guidePanel").style.display = "none";
+  document
+  .getElementById("spotInfo")
+  .style.display="none";
 
-  document.getElementById("resumeBtn").style.display = "block";
+  document
+  .getElementById("toggleSpotBtn")
+  .style.display="none";
 
+  document
+  .getElementById("chatInput")
+  .style.display="none";
 
-    const url =
+  document
+  .getElementById("resumeBtn")
+  .style.display="block";    
+
+      const url =
 
 `https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
 
@@ -956,16 +966,20 @@ document
 
 document
 .getElementById("resumeBtn")
-.addEventListener("click", function(){
+.addEventListener("click",function(){
 
-    alert("ボタンが押されました");
+    guidePaused=false;
+    guideActive=false;
 
-    guidePaused = false;
-    guideActive = false;
+    currentSpot=null;
+    enterTime=null;
 
-    currentSpot = null;
-    enterTime = null;
+    document
+    .getElementById("resumeBtn")
+    .style.display="none";
 
-    document.getElementById("resumeBtn").style.display = "none";
+    document
+    .getElementById("guidePanel")
+    .style.display="none";
 
 });

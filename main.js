@@ -533,30 +533,12 @@ document
 
   guidePaused = true;
 
-  document
-  .getElementById("spotInfo")
-  .style.display="none";
+  document.getElementById("guidePanel").style.display = "none";
 
-  document
-  .getElementById("toggleSpotBtn")
-  .style.display="none";
+  const url =
+  `https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
 
-  document
-  .getElementById("chatInput")
-  .style.display="none";
-
-  document
-  .getElementById("resumeBtn")
-  .style.display="block";    
-
-      const url =
-
-`https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
-
-  window.open(
-      url,
-      "_blank"
-  );
+  window.open(url, "_blank");
 
   }
 );
@@ -968,18 +950,13 @@ document
 .getElementById("resumeBtn")
 .addEventListener("click",function(){
 
-    guidePaused=false;
-    guideActive=false;
+document.getElementById("navigationPanel").style.display="none";
 
-    currentSpot=null;
-    enterTime=null;
+document.getElementById("guidePanel").style.display="none";
 
-    document
-    .getElementById("resumeBtn")
-    .style.display="none";
-
-    document
-    .getElementById("guidePanel")
-    .style.display="none";
+guidePaused=false;
+guideActive=false;
+currentSpot=null;
+enterTime=null;
 
 });

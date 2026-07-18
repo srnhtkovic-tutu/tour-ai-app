@@ -926,38 +926,6 @@ window.scrollTo({
 });
 
 document
-.getElementById("toggleGuideBtn")
-.addEventListener("click",function(){
-
-    const content =
-        document.getElementById("spotInfo");
-
-    const btn =
-        document.getElementById("toggleGuideBtn");
-
-    if(!spotInfoOpen){
-
-        content.style.display="block";
-
-        btn.textContent=
-            "▲ 案内文を閉じる";
-
-        spotInfoOpen=true;
-
-    }else{
-
-        content.style.display="none";
-
-        btn.textContent=
-            "▼ 案内文を表示";
-
-        spotInfoOpen=false;
-
-    }
-
-});
-
-document
 .getElementById("resumeBtn")
 .addEventListener("click", function () {
 

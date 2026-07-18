@@ -392,3 +392,114 @@ button{
     color:white;
 
 }
+
+/* ===========================
+   Ver0.6 ナビ待機画面
+   =========================== */
+
+#resumeScreen{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+
+    background:#f3f2ed;
+
+    z-index:9999;
+
+    padding:40px;
+
+    text-align:center;
+
+}
+
+#resumeScreen h2{
+
+    font-size:42px;
+
+    color:#2b5d34;
+
+    margin-top:80px;
+
+}
+
+#resumeScreen p{
+
+    font-size:28px;
+
+    line-height:1.8;
+
+    margin-top:30px;
+
+}
+
+#resumeBtn{
+
+    width:100%;
+
+    max-width:500px;
+
+    margin-top:60px;
+
+    padding:24px;
+
+    background:#ff9800;
+
+    color:white;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    border:none;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+
+}
+
+#resumeBtn:hover{
+
+    background:#f57c00;
+
+}
+
+@media (max-width:600px){
+
+    #resumeScreen{
+
+        padding:20px;
+
+    }
+
+    #resumeScreen h2{
+
+        font-size:34px;
+
+        margin-top:50px;
+
+    }
+
+    #resumeScreen p{
+
+        font-size:24px;
+
+    }
+
+    #resumeBtn{
+
+        font-size:28px;
+
+        padding:20px;
+
+    }
+
+}

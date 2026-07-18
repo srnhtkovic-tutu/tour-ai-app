@@ -523,25 +523,24 @@ document
 
 document
 .getElementById("goBtn")
-.addEventListener(
-  "click",
-  function(){
+.addEventListener("click", function () {
 
-    visitedSpots.add(
-      currentSpot.id
-    );
+    if (!currentSpot) return;
 
-  guidePaused = true;
+    visitedSpots.add(currentSpot.id);
 
-  document.getElementById("guidePanel").style.display = "none";
+    guidePaused = true;
 
-  const url =
-  `https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
+    // 案内パネルを閉じる
+    document.getElementById("guidePanel").style.display = "none";
 
-  window.open(url, "_blank");
+    const url =
+`https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
 
-  }
-);
+    window.open(url, "_blank");
+
+});
+
 
 document
 .getElementById("ignoreBtn")
@@ -727,6 +726,18 @@ async function sendQuestion(){
 }
 
 initialize();
+
+window.addEventListener("focus", function () {
+
+    if (guidePaused) {
+
+        console.log("アプリへ戻りました");
+
+        document.getElementById("resumeScreen").style.display = "block";
+
+    }
+
+});
 
 document
 .getElementById("toggleSpotBtn")
@@ -948,15 +959,16 @@ document
 
 document
 .getElementById("resumeBtn")
-.addEventListener("click",function(){
+.addEventListener("click", function () {
 
-document.getElementById("navigationPanel").style.display="none";
+    console.log("探索を再開");
 
-document.getElementById("guidePanel").style.display="none";
+    guidePaused = false;
+    guideActive = false;
 
-guidePaused=false;
-guideActive=false;
-currentSpot=null;
-enterTime=null;
+    currentSpot = null;
+    enterTime = null;
+
+    document.getElementById("resumeScreen").style.display = "none";
 
 });

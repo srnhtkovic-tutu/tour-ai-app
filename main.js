@@ -929,6 +929,8 @@ document
 .getElementById("resumeBtn")
 .addEventListener("click", function () {
 
+    alert("resumeBtnが押されました");
+
     console.log("探索を再開");
 
     guidePaused = false;

@@ -536,6 +536,14 @@ document
 
     guidePaused = true;
 
+    // 案内は終了したので解除
+    guideActive = false;
+
+    // 次回探索のためリセット
+    currentSpot = null;
+    enterTime = null;
+
+
     // 案内パネルを閉じる
     document.getElementById("guidePanel").style.display = "none";
 
@@ -734,13 +742,19 @@ initialize();
 
 window.addEventListener("focus", function () {
 
-    if (guidePaused) {
+    console.log("アプリへ戻りました");
 
-        console.log("アプリへ戻りました");
+    if (!guidePaused) return;
 
-        document.getElementById("resumeScreen").style.display = "block";
+    console.log("探索を自動再開");
 
-    }
+    guidePaused = false;
+
+    guideActive = false;
+
+    currentSpot = null;
+
+    enterTime = null;
 
 });
 
@@ -930,25 +944,3 @@ window.scrollTo({
 
 });
 
-document
-.getElementById("resumeBtn")
-.addEventListener("click", function () {
-
-    alert("resumeBtnが押されました");
-
-    console.log("探索を再開");
-
-console.log("=== 再探索開始 ===");
-
-guidePaused = false;
-guideActive = false;
-
-enterTime = null;
-
-document.getElementById("resumeScreen").style.display = "none";
-
-console.log("guidePaused =", guidePaused);
-console.log("guideActive =", guideActive);
-console.log("currentSpot =", currentSpot);
-
-});

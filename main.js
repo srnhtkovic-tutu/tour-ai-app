@@ -50,7 +50,7 @@ return data.map(spot => ({
 // =========================
 
 // 案内開始距離
-let triggerDistance = 30;
+let triggerDistance = 30000;
 
 // 離脱判定距離
 const LEAVE_DISTANCE = 100;
@@ -185,10 +185,15 @@ function processNearestSpot(
   currentLat,
   currentLng
 ) {
-  if (guideActive || guidePaused) {
-      return;
-  }
+if (guidePaused) {
+    console.log("探索停止中");
+    return;
+}
 
+if (guideActive) {
+    console.log("案内中");
+    return;
+}
   let nearest = null;
   let minDistance = Infinity;
 
@@ -933,12 +938,17 @@ document
 
     console.log("探索を再開");
 
-    guidePaused = false;
-    guideActive = false;
+console.log("=== 再探索開始 ===");
 
-    currentSpot = null;
-    enterTime = null;
+guidePaused = false;
+guideActive = false;
 
-    document.getElementById("resumeScreen").style.display = "none";
+enterTime = null;
+
+document.getElementById("resumeScreen").style.display = "none";
+
+console.log("guidePaused =", guidePaused);
+console.log("guideActive =", guideActive);
+console.log("currentSpot =", currentSpot);
 
 });

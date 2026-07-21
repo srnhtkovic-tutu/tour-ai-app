@@ -532,23 +532,22 @@ document
 
     if (!currentSpot) return;
 
+    // ★ URLは先に作る
+    const url =
+`https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
+
     visitedSpots.add(currentSpot.id);
 
     guidePaused = true;
 
-    // 案内は終了したので解除
+    // 案内終了
     guideActive = false;
 
-    // 次回探索のためリセット
-    currentSpot = null;
-    enterTime = null;
+    // ★ currentSpot はまだ消さない
+    // currentSpot = null;
+    // enterTime = null;
 
-
-    // 案内パネルを閉じる
     document.getElementById("guidePanel").style.display = "none";
-
-    const url =
-`https://www.google.com/maps/dir/?api=1&destination=${currentSpot.lat},${currentSpot.lng}`;
 
     window.open(url, "_blank");
 

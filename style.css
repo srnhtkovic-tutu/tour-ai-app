@@ -1,85 +1,128 @@
+/* ===========================
+   共通
+=========================== */
+
 *{
-
     box-sizing:border-box;
-
 }
 
 body{
 
     margin:0;
-
     padding:20px;
-
-    padding-bottom:220px;
-
     background:#f3f2ed;
-
     font-family:sans-serif;
-
     color:#333;
 
 }
 
-#app{
-
-    max-width:700px;
-
-    margin:auto;
-
-}
-
-#status{
-
-    font-size:20px;
-
-    color:#666;
-
-    margin-bottom:10px;
-
-}
+/* ===========================
+   起動画面
+=========================== */
 
 #startPanel{
 
+    position:fixed;
+    inset:0;
+
     background:white;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    gap:18px;
 
     padding:30px;
 
-    border-radius:18px;
-
-    text-align:center;
-
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
-
-    margin-bottom:20px;
+    z-index:9999;
 
 }
 
-#startGuideBtn{
+#startPanel h1{
 
-    margin-top:20px;
+    font-size:52px;
+    margin:0;
+
+    color:#2b5d34;
+
+}
+
+#startPanel p{
+
+    font-size:30px;
+    line-height:1.7;
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.typeBtn{
+
+    width:100%;
+    max-width:520px;
+
+    padding:24px;
+
+    font-size:30px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#eeeeee;
+
+}
+
+.typeBtn.selected{
 
     background:#4caf50;
 
     color:white;
 
-    font-size:28px;
+}
 
-    padding:20px;
+#startGuideBtn{
+
+    width:100%;
+    max-width:520px;
+
+    padding:26px;
+
+    font-size:34px;
 
     border:none;
 
-    border-radius:14px;
+    border-radius:16px;
 
-    width:100%;
+    background:#ff9800;
 
-    cursor:pointer;
+    color:white;
 
 }
 
-#distanceSlider{
+/* ===========================
+   情報パネル
+=========================== */
 
-    width:95%;
-    height:12px;
+.panel{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    margin-bottom:20px;
+
+}
+
+#status{
+
+    font-size:22px;
 
 }
 
@@ -89,9 +132,17 @@ body{
 
     font-weight:bold;
 
-    margin-bottom:20px;
+}
+
+#stayTime{
+
+    font-size:22px;
 
 }
+
+/* ===========================
+   ガイド
+=========================== */
 
 #guidePanel{
 
@@ -101,39 +152,69 @@ body{
 
     border-radius:18px;
 
-    padding:25px;
+    padding:20px;
 
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
 
 }
+
+/* ===========================
+   写真
+=========================== */
+
+#spotImage{
+
+    width:100%;
+
+    height:auto;
+
+    max-height:350px;
+
+    object-fit:contain;
+
+    border-radius:14px;
+
+    margin-bottom:20px;
+
+}
+
+/* ===========================
+   タイトル
+=========================== */
 
 #guideTitle{
 
     font-size:42px;
 
-    margin-top:0;
-
-    margin-bottom:20px;
-
     color:#2b5d34;
 
+    margin-top:0;
+
 }
+
+/* ===========================
+   案内文
+=========================== */
 
 #guideMessage{
 
     font-size:30px;
 
-    line-height:1.9;
+    line-height:1.8;
 
     white-space:pre-wrap;
 
 }
 
+/* ===========================
+   ボタン
+=========================== */
+
 button{
 
     width:100%;
 
-    margin-top:20px;
+    margin-top:16px;
 
     padding:22px;
 
@@ -157,119 +238,55 @@ button{
 
 #ignoreBtn{
 
-    background:#4caf50;
-
-    color:white;
+    background:#e0e0e0;
 
 }
 
-@media (max-width:600px){
+#toggleSpotBtn{
 
-    body{
-
-        padding:15px;
-
-    }
-
-    #guideTitle{
-
-        font-size:36px;
-
-    }
-
-    #guideMessage{
-
-        font-size:26px;
-
-    }
-
-    button{
-
-        font-size:24px;
-
-        padding:18px;
-
-    }
+    background:#fafafa;
 
 }
 
-#spotImage{
-
-    width:100%;
-
-    height:auto;
-
-    border-radius:16px;
-
-    margin-bottom:20px;
-
-    display:block;
-
-}
-
-#chatArea{
-
-    margin-top:30px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    height:100%;
-
-}
-
-#question{
-
-    width:100%;
-
-    min-height:90px;
-
-    font-size:24px;
-
-    border-radius:16px;
-
-    padding:18px;
-
-    border:2px solid #ddd;
-
-}
-
-#chatHistory{
-
-    margin-top:20px;
-
-    padding-bottom:20px;
-
-    height: 45vh;
-
-    overflow-y: auto;
-
-}
-
-#chatArea h3{
-
-    font-size:34px;
-
-    margin-bottom:10px;
-
-    color:#2b5d34;
-
-}
-
-.chatDescription{
-
-    font-size:22px;
-
-    color:#666;
-
-    margin-bottom:20px;
-
-}
+/* ===========================
+   チャット
+=========================== */
 
 #chatHistory{
 
     margin-top:25px;
+
+    margin-bottom:240px;
+
+}
+
+.userMessage{
+
+    background:#d9f0ff;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    margin:12px 0;
+
+    font-size:26px;
+
+}
+
+.aiMessage{
+
+    background:#f7f7f7;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    margin:12px 0;
+
+    font-size:26px;
+
+    line-height:1.8;
 
 }
 
@@ -287,89 +304,21 @@ button{
 
     padding:15px;
 
-    box-shadow:0 -3px 10px rgba(0,0,0,0.15);
+    box-shadow:0 -3px 12px rgba(0,0,0,.15);
 
 }
 
-.userMessage{
+#chatInput h3{
 
-    background:#d8ecff;
+    margin-top:0;
 
-    padding:18px;
-
-    border-radius:18px;
-
-    margin-top:20px;
-
-    margin-left:20%;
-
-    font-size:24px;
+    font-size:30px;
 
 }
 
-.aiMessage{
+.chatDescription{
 
-    background:#ffffff;
-
-    padding:20px;
-
-    border-radius:18px;
-
-    margin-top:10px;
-
-    margin-right:20%;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-
-    font-size:24px;
-
-    line-height:1.8;
-
-}
-
-#guideContent{
-
-    overflow:hidden;
-
-}
-
-#toggleGuideBtn{
-
-    margin-top:10px;
-
-    background:#f5f5f5;
-
-    color:#333;
-
-    font-size:20px;
-
-}
-
-#spotInfo{
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:20px;
-
-    margin-bottom:15px;
-
-}
-
-#toggleSpotBtn{
-
-    width:100%;
-
-    background:#ececec;
-
-    color:#444;
-
-    font-size:20px;
-
-    padding:16px;
-
-    margin-top:10px;
+    font-size:22px;
 
 }
 
@@ -377,142 +326,25 @@ button{
 
     width:100%;
 
-    font-size:22px;
+    font-size:24px;
+
+    padding:15px;
 
     border-radius:12px;
-
-    padding:12px;
-
-}
-
-#resumeBtn{
-
-    background:#ff9800;
-
-    color:white;
 
 }
 
 /* ===========================
-   Ver0.6 ナビ待機画面
-   =========================== */
+   GoogleMap待機
+=========================== */
 
 #resumeScreen{
-
-    display:none;
-
-    position:fixed;
-
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-
-    background:#f3f2ed;
-
-    z-index:9999;
-
-    padding:40px;
-
-    text-align:center;
-
-}
-
-#resumeScreen h2{
-
-    font-size:42px;
-
-    color:#2b5d34;
-
-    margin-top:80px;
-
-}
-
-#resumeScreen p{
-
-    font-size:28px;
-
-    line-height:1.8;
-
-    margin-top:30px;
-
-}
-
-#resumeBtn{
-
-    width:100%;
-
-    max-width:500px;
-
-    margin-top:60px;
-
-    padding:24px;
-
-    background:#ff9800;
-
-    color:white;
-
-    font-size:32px;
-
-    font-weight:bold;
-
-    border:none;
-
-    border-radius:18px;
-
-    cursor:pointer;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
-
-}
-
-#resumeBtn:hover{
-
-    background:#f57c00;
-
-}
-
-@media (max-width:600px){
-
-    #resumeScreen{
-
-        padding:20px;
-
-    }
-
-    #resumeScreen h2{
-
-        font-size:34px;
-
-        margin-top:50px;
-
-    }
-
-    #resumeScreen p{
-
-        font-size:24px;
-
-    }
-
-    #resumeBtn{
-
-        font-size:28px;
-
-        padding:20px;
-
-    }
-
-}
-
-#startPanel{
 
     position:fixed;
 
     inset:0;
 
     background:white;
-
-    z-index:9999;
 
     display:flex;
 
@@ -522,36 +354,74 @@ button{
 
     align-items:center;
 
-    gap:20px;
+    text-align:center;
 
     padding:30px;
 
+    z-index:9998;
+
 }
 
-.typeBtn{
+#resumeScreen h2{
 
-    width:100%;
+    font-size:42px;
 
-    max-width:420px;
+}
+
+#resumeScreen p{
 
     font-size:28px;
 
-}
-
-.typeBtn.selected{
-
-    background:#4caf50;
-
-    color:white;
+    line-height:1.7;
 
 }
 
-#startGuideBtn{
+/* ===========================
+   スマホ
+=========================== */
 
-    margin-top:30px;
+@media(max-width:700px){
 
-    background:#ff9800;
+    body{
 
-    color:white;
+        padding:15px;
+
+    }
+
+    #startPanel h1{
+
+        font-size:42px;
+
+    }
+
+    #startPanel p{
+
+        font-size:24px;
+
+    }
+
+    .typeBtn{
+
+        font-size:26px;
+
+    }
+
+    #startGuideBtn{
+
+        font-size:30px;
+
+    }
+
+    #guideTitle{
+
+        font-size:34px;
+
+    }
+
+    #guideMessage{
+
+        font-size:24px;
+
+    }
 
 }

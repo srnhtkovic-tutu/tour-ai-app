@@ -97,6 +97,11 @@ let spotInfoOpen = true;
 let chatHistory = [];
 
 // =========================
+// ユーザータイプ
+// =========================
+let userType = "歴史・文化探訪";
+
+// =========================
 // スライダー
 // =========================
 
@@ -663,7 +668,9 @@ async function createGuide(spot) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        spot: spot
+        spot: spot,
+
+        userType: userType
       })
     }
   );
@@ -738,6 +745,59 @@ async function sendQuestion(){
 }
 
 initialize();
+
+// =========================
+// ユーザータイプ選択
+// =========================
+
+document
+.querySelectorAll(".typeBtn")
+.forEach(btn=>{
+
+    btn.addEventListener(
+
+        "click",
+
+        function(){
+
+            document
+            .querySelectorAll(".typeBtn")
+            .forEach(
+
+                b=>b.classList.remove("selected")
+
+            );
+
+            this.classList.add("selected");
+
+            userType =
+                this.dataset.type;
+
+            console.log(userType);
+
+        }
+
+    );
+
+});
+
+document
+.getElementById("startGuideBtn")
+.addEventListener(
+
+    "click",
+
+    function(){
+
+        document
+        .getElementById("startPanel")
+        .style.display="none";
+
+        startWatch();
+
+    }
+
+);
 
 window.addEventListener("focus", function () {
 

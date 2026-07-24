@@ -31,9 +31,19 @@
 
 <body>
 
-  <div id="startPanel">
+<!-- ========================= -->
+<!-- 起動画面 -->
+<!-- ========================= -->
 
-    <h2>旅の目的を選んでください</h2>
+<div id="startPanel">
+
+    <h1>まちあるきAIガイド</h1>
+
+    <p>
+
+        あなたの旅の目的を教えてください。
+
+    </p>
 
     <button class="typeBtn" data-type="グルメ">
         🍴 グルメ
@@ -53,70 +63,76 @@
 
     <button id="startGuideBtn">
 
-        ガイド開始
-
-    </button>
-
-  </div>
-
-  <h1>まちあるきAIガイドver1.0.0</h1>
-
-  <div id="startPanel">
-
-    <h2>まちあるきAIガイドへようこそ！</h2>
-
-    <p>
-
-        わたしのおすすめスポットをAIがご案内します。
-
-    </p>
-
-    <button id="startGuideBtn">
-
         ▶ ガイド開始
 
     </button>
 
 </div>
 
-  <div class="panel">
+
+<!-- ========================= -->
+<!-- メイン画面 -->
+<!-- ========================= -->
+
+<h1>まちあるきAIガイド Ver1.0.0</h1>
+
+<div class="panel">
 
     <h3>案内開始距離</h3>
 
     <input
-      type="range"
-      id="distanceSlider"
-      min="100"
-      max="30000"
-      step="100"
-      value="30000"
+        type="range"
+        id="distanceSlider"
+        min="10"
+        max="300"
+        step="10"
+        value="30"
     >
 
     <p>
-      現在:
-      <span id="distanceValue">30000</span>
-      m
+
+        現在：
+
+        <span id="distanceValue">
+
+            30
+
+        </span>
+
+        m
+
     </p>
 
-  </div>
+</div>
 
-  <div class="panel">
+<div class="panel">
 
-    <p id="status">待機中</p>
+    <p id="status">
+
+        待機中
+
+    </p>
 
     <p id="nearestSpot">
-      最寄りスポット: なし
+
+        最寄りスポット：なし
+
     </p>
 
     <p id="stayTime">
-      滞在時間: 0秒
+
+        滞在時間：0秒
+
     </p>
 
-  </div>
+</div>
 
-  <div id="guidePanel">
 
-    <!-- スポット情報 -->
+<!-- ========================= -->
+<!-- ガイド -->
+<!-- ========================= -->
+
+<div id="guidePanel">
 
     <div id="spotInfo">
 
@@ -127,20 +143,18 @@
         <p id="guideMessage"></p>
 
         <button id="goBtn">
+
             🧭 行ってみる
+
         </button>
 
         <button id="ignoreBtn">
-            ❌ ほかをみる
-        </button>
 
-        <button id="resumeBtn" style="display:none;">
-             ▶ 探索を再開
+            ❌ ほかをみる
+
         </button>
 
     </div>
-
-    <!-- 開閉ボタン -->
 
     <button id="toggleSpotBtn">
 
@@ -150,13 +164,9 @@
 
     <hr>
 
-    <!-- チャット履歴 -->
-
     <div id="chatHistory">
 
     </div>
-
-    <!-- 入力エリア -->
 
     <div id="chatInput">
 
@@ -173,13 +183,9 @@
         </p>
 
         <textarea
-
             id="question"
-
             rows="3"
-
             placeholder="例：御朱印はありますか？"
-
         ></textarea>
 
         <button id="sendBtn">
@@ -187,36 +193,34 @@
             💬 質問する
 
         </button>
-        
-    </div>
-
-    <div id="navigationPanel" style="display:none;">
-
-    <h2>🧭 Googleマップで案内中</h2>
-
-    <p>
-        現地に到着したら探索を再開してください。
-    </p>
-
-    <button id="resumeBtn">
-        ▶ 探索を再開
-    </button>
 
     </div>
 
-  </div>
+</div>
 
-<!-- GoogleMapから戻ったときの待機画面 -->
+
+<!-- ========================= -->
+<!-- GoogleMapから戻った画面 -->
+<!-- ========================= -->
+
 <div id="resumeScreen" style="display:none;">
 
-    <h2>🧭 ナビゲーション中</h2>
+    <h2>
+
+        🧭 ナビゲーション中
+
+    </h2>
 
     <p>
+
         Googleマップで目的地へ向かっています。
+
     </p>
 
     <p>
+
         現地に到着したら探索を再開してください。
+
     </p>
 
     <button id="resumeBtn">
@@ -227,8 +231,9 @@
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="main.js"></script>
+<script src="main.js"></script>
 
 </body>
 </html>
